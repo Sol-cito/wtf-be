@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Health Check') {
+        stage('Pipeline Health Check') {
             steps {
-                echo "Hello WTF!!!!!"
+                echo "Hello WTF Jenkins!!!!!"
             }
         }
 //         stage('Build') {
