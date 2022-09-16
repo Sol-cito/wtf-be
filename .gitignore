@@ -36,4 +36,4 @@ out/
 .vscode/
 
 ### application recource ###
-src/main/resources/
+!**/src/main/resources/
