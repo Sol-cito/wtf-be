@@ -36,4 +36,5 @@ out/
 .vscode/
 
 ### application recource ###
-!**/src/main/resources/
+**/resources/main/application.properties
+**/resources/main/application.yml
