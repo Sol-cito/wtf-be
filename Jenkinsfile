@@ -7,6 +7,12 @@ pipeline {
                 echo "Hello WTF Jenkins!!!!!"
             }
         }
+
+        stage('Build') {
+            steps {
+                echo "Build start"
+            }
+        }
 //         stage('Build') {
 //             steps {
 //                 sh "cd /var/lib/jenkins/jobs/wtf-fe-dev/workspace/"
