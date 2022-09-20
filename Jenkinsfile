@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo "Build start by shell script"
                 sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/'
-                sh 'sh deploy.sh'
+                sh 'bash deploy.sh'
             }
         }
     }
