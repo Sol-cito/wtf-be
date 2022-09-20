@@ -63,7 +63,8 @@ JENKINS_WORKSPACE=/var/lib/jenkins/jobs/wtf-be-dev/workspace
 REPOSITORY=/home/sol/project/wtf-be-dev/$IDLE_PROFILE
 
 cd "${JENKINS_WORKSPACE}"
-sudo ./gradlew build
+sudo chmod +x gradlew
+./gradlew build
 cp "${JENKINS_WORKSPACE}"/libs/*.jar "${REPOSITORY}"
 
 
