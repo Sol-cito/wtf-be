@@ -101,8 +101,8 @@ sudo systemctl restart nginx
 CURRENT_PORT=$(find_current_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
 echo "> current port : ${CURRENT_PORT}"
 
-CURRENT_PID=$(lsof -ti tcp:"${CURRENT_PORT}")
-echo "> ${CURRENT_PID}"
+CURRENT_PID=$(sudo lsof -ti tcp:"${CURRENT_PORT}")
+echo "> CURRENT_PID : ${CURRENT_PID}"
 
 if [ -z "${CURRENT_PID}" ]
 then
