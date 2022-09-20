@@ -1,8 +1,6 @@
 function find_idle_service_name() {
   CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
 
-  echo " > CUR_PROFILE : ${CUR_PROFILE}"
-
   if [ "${CUR_PROFILE}" == "blue" ]; then
     echo "green"
   else
