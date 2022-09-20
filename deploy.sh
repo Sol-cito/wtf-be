@@ -18,15 +18,6 @@ function find_idle_port() {
   fi
 }
 
-function find_current_port() {
-  CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
-
-  if [ "${CUR_PROFILE}" == "blue" ]; then
-    echo "${3}"
-  else
-    echo "${4}"
-  fi
-}
 
 # Variables
 ADDRESS="localhost"
@@ -96,19 +87,20 @@ echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/co
 
 echo "> Reload NGINX"
 sudo systemctl restart nginx
+sleep 10
 
-# kill current process
-CURRENT_PORT=$(find_current_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
-echo "> current port : ${CURRENT_PORT}"
+# kill previous process
+PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
+echo "> Previous port : ${PREVIOUS_PORT}"
 
-CURRENT_PID=$(sudo lsof -ti tcp:"${CURRENT_PORT}")
-echo "> CURRENT_PID : ${CURRENT_PID}"
+PREVIOUS_PID=$(sudo lsof -ti tcp:"${PREVIOUS_PORT}")
+echo "> CURRENT_PID : ${PREVIOUS_PID}"
 
-if [ -z "${CURRENT_PID}" ]
+if [ -z "${PREVIOUS_PID}" ]
 then
-  echo "> there is no currently running app on ${CURRENT_PID}"
+  echo "> there is no currently running app on ${PREVIOUS_PID}"
 else
-  echo "> kill -15 ${CURRENT_PID}"
-  kill -15 "${CURRENT_PID}"
-  sleep 5
+  echo "> kill -15 ${PREVIOUS_PID}"
+  kill -9 "${PREVIOUS_PID}"
+  sleep 10
 fi
