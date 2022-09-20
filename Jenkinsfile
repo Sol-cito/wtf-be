@@ -11,7 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build start by shell script"
-                sh 'deploy.sh'
+                sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/'
+                sh 'sh deploy.sh'
             }
         }
     }
