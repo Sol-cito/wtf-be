@@ -67,7 +67,7 @@ sudo chmod +x gradlew
 sudo ./gradlew build
 
 if [ $? -eq 0 ];then
-  cp "${JENKINS_WORKSPACE}"/build/libs/*.jar "${REPOSITORY}"
+  sudo cp "${JENKINS_WORKSPACE}"/build/libs/*.jar "${REPOSITORY}"
 else
   echo "build fail"
   exit 9
@@ -86,7 +86,7 @@ chmod +x "${JAR_NAME}"
 
 echo "> execute ${JAR_NAME}"
 
-java -jar -Dspring.profiles.active="${IDLE_PORT}" "${JAR_NAME}"
+sudo java -jar -Dspring.profiles.active="${IDLE_PORT}" "${JAR_NAME}"
 
 # switch NGINX
 echo "> Port switch"
