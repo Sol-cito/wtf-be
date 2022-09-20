@@ -82,14 +82,14 @@ echo "> JAR Name: ${JAR_NAME}"
 
 echo "> add execution permission to ${JAR_NAME}"
 
-chmod +x "${JAR_NAME}"
+sudo chmod +x "${JAR_NAME}"
 
 echo "> execute ${JAR_NAME}"
 
-sudo java -jar -Dspring.profiles.active="${IDLE_PORT}" "${JAR_NAME}"
+sudo nohup java -jar -Dspring.profiles.active="${IDLE_PORT}" "${JAR_NAME}" &
 
 # switch NGINX
-echo "> Port switch"
+echo "> Port switch"1
 echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/wtf-service-url.inc
 
 echo "> Reload NGINX"
