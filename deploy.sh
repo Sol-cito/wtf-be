@@ -92,7 +92,7 @@ nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
 
 # switch NGINX
 echo "> Port switch"
-echo "> set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/wtf-service-url.inc
+echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/wtf-service-url.inc
 
 echo "> Reload NGINX"
 sudo systemctl restart nginx
