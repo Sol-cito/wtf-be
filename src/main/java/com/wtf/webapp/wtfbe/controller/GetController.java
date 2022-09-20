@@ -31,6 +31,11 @@ public class GetController {
         return Arrays.asList(env.getActiveProfiles()).stream().findFirst().orElse("");
     }
 
+    @GetMapping(path = "/player")
+    public ResponseEntity<String> getPlayerByName() {
+        return new ResponseEntity<>("Hello WTF!", OK);
+    }
+
     @GetMapping(path = "/player/all")
     public ResponseEntity<List<PlayerDto>> getAllPlayers() {
         return new ResponseEntity<>(playerService.getAllPlayers(), OK);
