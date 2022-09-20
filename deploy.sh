@@ -86,7 +86,7 @@ sudo chmod +x "${JAR_NAME}"
 
 echo "> execute ${JAR_NAME}"
 
-sudo nohup java -jar -Dspring.profiles.active="${IDLE_PORT}" "${JAR_NAME}" &
+nohup java -jar -Dspring.profiles.active="${IDLE_PORT}" "${JAR_NAME}" &
 
 # switch NGINX
 echo "> Port switch"1
