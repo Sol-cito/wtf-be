@@ -46,7 +46,7 @@ echo "> idle port : ${IDLE_PORT}"
 
 # check pid and kill process
 echo "> check running app pid on ${IDLE_PORT}"
-IDLE_PID=$(lsof -ti tcp:"${IDLE_PORT}")
+IDLE_PID=$(sudo lsof -ti tcp:"${IDLE_PORT}")
 
 echo "> IDLE_PID : ${IDLE_PID}"
 if [ -z "${IDLE_PID}" ]
