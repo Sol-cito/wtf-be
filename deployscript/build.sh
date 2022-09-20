@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function find_idle_service_name() {
   CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
 
