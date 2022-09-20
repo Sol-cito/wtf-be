@@ -67,7 +67,7 @@ sudo chmod +x gradlew
 sudo ./gradlew build
 
 if [ $? -eq 0 ];then
-  sudo cp "${JENKINS_WORKSPACE}"/build/libs/*.jar "${REPOSITORY}"
+  sudo cp "${JENKINS_WORKSPACE}"/build/libs/*SNAPSHOT.jar "${REPOSITORY}"
 else
   echo "build fail"
   exit 9
