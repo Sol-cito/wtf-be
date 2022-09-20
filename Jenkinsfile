@@ -18,7 +18,7 @@ pipeline {
 
         stage('Health check') {
             steps {
-                sh 'curl -m 10 http://127.0.0.1:10083/health'
+                sh 'curl -m 10 http://127.0.0.1:83/health'
             }
         }
     }
