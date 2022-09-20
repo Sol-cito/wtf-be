@@ -10,8 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build start by shell script"
-                sh 'ls'
-                sh 'cd deploy-script'
+                sh 'sudo cd deploy-script'
                 sh 'ls'
                 sh 'bash build.sh'
             }
