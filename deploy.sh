@@ -64,7 +64,7 @@ REPOSITORY=/home/sol/project/wtf-be-dev/$IDLE_PROFILE
 
 cd "${JENKINS_WORKSPACE}"
 sudo chmod +x gradlew
-bash ./gradlew build
+sudo ./gradlew build
 cp "${JENKINS_WORKSPACE}"/libs/*.jar "${REPOSITORY}"
 
 
