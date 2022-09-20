@@ -65,8 +65,13 @@ REPOSITORY=/home/sol/project/wtf-be-dev/$IDLE_PROFILE
 cd "${JENKINS_WORKSPACE}"
 sudo chmod +x gradlew
 sudo ./gradlew build
-cp "${JENKINS_WORKSPACE}"/libs/*.jar "${REPOSITORY}"
 
+if [ $? -eq 0 ];then
+  cp "${JENKINS_WORKSPACE}"/build/libs/*.jar "${REPOSITORY}"
+else
+  echo "build fail"
+  exit 9
+fi
 
 # Deploy
 cd "${REPOSITORY}"
