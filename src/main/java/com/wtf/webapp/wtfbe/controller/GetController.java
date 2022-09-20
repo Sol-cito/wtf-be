@@ -1,12 +1,13 @@
 package com.wtf.webapp.wtfbe.controller;
 
-import com.wtf.webapp.wtfbe.entity.PlayerEntity;
+import com.wtf.webapp.wtfbe.dto.CommonResponseDto;
+import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
@@ -36,7 +37,7 @@ public class GetController {
     }
 
     @GetMapping(path = "/player/all")
-    public ResponseEntity<String> getAllPlayers() {
-        return new ResponseEntity(playerService.getAllPlayer(), OK);
+    public ResponseEntity<List<PlayerDto>> getAllPlayers() {
+        return new ResponseEntity<>(playerService.getAllPlayers(), OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.entity;
 
+import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,4 +31,16 @@ public class PlayerEntity {
     private String moto;
 
     private String curYn;
+
+    public PlayerDto convertToDto() {
+        return PlayerDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .birth(this.birth)
+                .position(this.position)
+                .backNo(this.backNo)
+                .moto(this.moto)
+                .curYn(this.curYn)
+                .build();
+    }
 }

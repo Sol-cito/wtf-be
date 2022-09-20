@@ -15,5 +15,11 @@ pipeline {
                 sh 'bash deploy.sh'
             }
         }
+
+        stage('Health check') {
+            steps {
+                sh 'curl -m 10 "http://127.0.0.1:10083/health'
+            }
+        }
     }
 }
