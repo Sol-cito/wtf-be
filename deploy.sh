@@ -86,6 +86,8 @@ sudo chmod +x "${JAR_NAME}"
 
 echo "> execute ${JAR_NAME}"
 
+echo "> nohup java -jar -Dspring.profiles.active=${IDLE_PROFILE} ${JAR_NAME} &"
+
 nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
 
 # switch NGINX
