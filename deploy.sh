@@ -87,13 +87,14 @@ echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/co
 
 echo "> Reload NGINX"
 sudo systemctl restart nginx
+sleep 10
 
 # kill previous process
 PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
 echo "> Previous port : ${PREVIOUS_PORT}"
 
 PREVIOUS_PID=$(sudo lsof -ti tcp:"${PREVIOUS_PORT}")
-echo "> CURRENT_PID : ${PREVIOUS_PID}"
+echo "> PREVIOUS_PID : ${PREVIOUS_PID}"
 
 if [ -z "${PREVIOUS_PID}" ]
 then
