@@ -10,8 +10,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build start by shell script"
-                sh 'sudo cd deploy-script'
-                sh 'ls'
+                dir("/var/lib/jenkins/jobs/wtf-be-dev/workspace/deploy-script") {
+                    sh "pwd"
+                }
                 sh 'bash build.sh'
             }
         }
