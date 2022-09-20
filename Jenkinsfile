@@ -11,14 +11,36 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build start by shell script"
-                sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/'
-                sh 'bash deploy.sh'
+                sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
+                sh "sudo chmod +x build.sh"
+                sh 'bash build.sh'
             }
         }
 
-        stage('Health check') {
+        stage('New Instance Health check') {
             steps {
-                sh 'curl -m 10 http://127.0.0.1:83/health'
+                echo "Health check start by shell script"
+                sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
+                sh "sudo chmod +x healthCheck.sh"
+                sh 'bash healthCheck.sh'
+            }
+        }
+
+        stage('Nginx Port Switching') {
+            steps {
+                echo "Switching by shell script"
+                sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
+                sh "sudo chmod +x portSwitch.sh"
+                sh 'bash portSwitch.sh'
+            }
+        }
+
+        stage('Kill Previous Instance Process') {
+            steps {
+                echo "Kill Previous Instance Process by shell script"
+                sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
+                sh "sudo chmod +x killPreviousProcess.sh"
+                sh 'bash killPreviousProcess.sh'
             }
         }
     }

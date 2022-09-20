@@ -65,8 +65,8 @@ else
   exit 9
 fi
 
-# Deploy
-echo "> Deploy new application jar"
+# Build
+echo "> Build new application jar"
 JAR_NAME=$(ls -tr "${REPOSITORY}"/*.jar | tail -n 1)
 
 echo "> JAR Name: ${JAR_NAME}"
@@ -81,26 +81,5 @@ echo "> Run java jar in background"
 
 sudo nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
 
-# switch NGINX
-echo "> Port switch"
-echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/wtf-service-url.inc
-
-echo "> Reload NGINX"
-sudo systemctl restart nginx
+echo "> Build success...."
 sleep 10
-
-# kill previous process
-PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
-echo "> Previous port : ${PREVIOUS_PORT}"
-
-PREVIOUS_PID=$(sudo lsof -ti tcp:"${PREVIOUS_PORT}")
-echo "> PREVIOUS_PID : ${PREVIOUS_PID}"
-
-if [ -z "${PREVIOUS_PID}" ]
-then
-  echo "> there is no currently running app on ${PREVIOUS_PID}"
-else
-  echo "> kill -15 ${PREVIOUS_PID}"
-  sudo kill -9 "${PREVIOUS_PID}"
-  sleep 10
-fi
