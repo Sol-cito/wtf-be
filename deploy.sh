@@ -87,7 +87,6 @@ echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/co
 
 echo "> Reload NGINX"
 sudo systemctl restart nginx
-sleep 10
 
 # kill previous process
 PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
@@ -101,6 +100,6 @@ then
   echo "> there is no currently running app on ${PREVIOUS_PID}"
 else
   echo "> kill -15 ${PREVIOUS_PID}"
-  kill -9 "${PREVIOUS_PID}"
+  suso kill -9 "${PREVIOUS_PID}"
   sleep 10
 fi
