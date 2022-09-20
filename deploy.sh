@@ -31,7 +31,7 @@ function find_current_port() {
 # Variables
 ADDRESS="localhost"
 
-PORT=10083 # NGINX fortforwarding PORT
+PORT=83 # NGINX local PORT
 
 BLUE_PORT=8095
 GREEN_PORT=8096
