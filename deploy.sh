@@ -1,6 +1,8 @@
 function find_idle_service_name() {
   CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
 
+  echo " > CUR_PROFILE : ${CUR_PROFILE}"
+
   if [ "${CUR_PROFILE}" == "blue" ]; then
     echo "green"
   else
@@ -46,7 +48,7 @@ echo "> idle port : ${IDLE_PORT}"
 
 # check pid and kill process
 echo "> check running app pid on ${IDLE_PORT}"
-IDLE_PID=$(sudo lsof -ti tcp:"${IDLE_PORT}")
+IDLE_PID=$(lsof -ti tcp:"${IDLE_PORT}")
 
 echo "> IDLE_PID : ${IDLE_PID}"
 if [ -z "${IDLE_PID}" ]
@@ -89,8 +91,8 @@ echo "> execute ${JAR_NAME}"
 nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
 
 # switch NGINX
-echo "> Port switch"1
-echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/wtf-service-url.inc
+echo "> Port switch"
+echo "> set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/wtf-service-url.inc
 
 echo "> Reload NGINX"
 sudo systemctl restart nginx
