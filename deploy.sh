@@ -77,7 +77,7 @@ sudo chmod +x "${JAR_NAME}"
 
 echo "> execute ${JAR_NAME}"
 
-echo "> nohup java -jar -Dspring.profiles.active=${IDLE_PROFILE} ${JAR_NAME} &"
+echo "> Run java jar in background"
 
 sudo nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
 
@@ -100,6 +100,6 @@ then
   echo "> there is no currently running app on ${PREVIOUS_PID}"
 else
   echo "> kill -15 ${PREVIOUS_PID}"
-  suso kill -9 "${PREVIOUS_PID}"
+  sudo kill -9 "${PREVIOUS_PID}"
   sleep 10
 fi
