@@ -68,13 +68,13 @@ sudo ./gradlew build
 
 if [ $? -eq 0 ];then
   sudo cp "${JENKINS_WORKSPACE}"/build/libs/*SNAPSHOT.jar "${REPOSITORY}"
+  echo "> copy snapshot jar"
 else
-  echo "build fail"
+  echo "> build fail"
   exit 9
 fi
 
 # Deploy
-cd "${REPOSITORY}"
 echo "> Deploy new application jar"
 JAR_NAME=$(ls -tr "${REPOSITORY}"/*.jar | tail -n 1)
 
@@ -88,7 +88,7 @@ echo "> execute ${JAR_NAME}"
 
 echo "> nohup java -jar -Dspring.profiles.active=${IDLE_PROFILE} ${JAR_NAME} &"
 
-nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
+sudo nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
 
 # switch NGINX
 echo "> Port switch"
