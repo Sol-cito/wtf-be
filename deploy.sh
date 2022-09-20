@@ -46,16 +46,16 @@ echo "> idle port : ${IDLE_PORT}"
 
 # check pid and kill process
 echo "> check running app pid on ${IDLE_PORT}"
-IDLE_PID=$(lsof -ti tcp:"${IDLE_PORT}")
+IDLE_PID=$(sudo lsof -ti tcp:"${IDLE_PORT}")
 
-echo "> ${IDLE_PID}"
+echo "> IDLE_PID : ${IDLE_PID}"
 if [ -z "${IDLE_PID}" ]
 then
   echo "> there is no currently running app on ${IDLE_PID}"
 else
   echo "> kill -15 ${IDLE_PID}"
-  kill -15 "${IDLE_PID}"
-  sleep 5
+  sudo kill -15 "${IDLE_PID}"
+  sleep 10
 fi
 
 # create .jar
