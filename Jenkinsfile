@@ -12,7 +12,6 @@ pipeline {
             steps {
                 echo "Build start by shell script"
                 sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
-                sh "sudo chmod +x build.sh"
                 sh 'bash build.sh'
             }
         }
@@ -21,7 +20,6 @@ pipeline {
             steps {
                 echo "Health check start by shell script"
                 sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
-                sh "sudo chmod +x healthCheck.sh"
                 sh 'bash healthCheck.sh'
             }
         }
@@ -30,7 +28,6 @@ pipeline {
             steps {
                 echo "Switching by shell script"
                 sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
-                sh "sudo chmod +x portSwitch.sh"
                 sh 'bash portSwitch.sh'
             }
         }
@@ -39,7 +36,6 @@ pipeline {
             steps {
                 echo "Kill Previous Instance Process by shell script"
                 sh 'cd /var/lib/jenkins/jobs/wtf-be-dev/workspace/script/'
-                sh "sudo chmod +x killPreviousProcess.sh"
                 sh 'bash killPreviousProcess.sh'
             }
         }
