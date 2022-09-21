@@ -22,6 +22,10 @@ public class PlayerEntity {
 
     private String name;
 
+    private String firstNameEng;
+
+    private String familyNameEng;
+
     private Date birth;
 
     private String position;
@@ -32,6 +36,8 @@ public class PlayerEntity {
 
     private String curYn;
 
+    private String profileImgSrc;
+
     public PlayerDto convertToDto() {
         return PlayerDto.builder()
                 .id(this.id)
@@ -41,6 +47,7 @@ public class PlayerEntity {
                 .backNo(this.backNo)
                 .moto(this.moto)
                 .curYn(this.curYn)
+                .profileImgSrc(this.profileImgSrc)
                 .build();
     }
 }

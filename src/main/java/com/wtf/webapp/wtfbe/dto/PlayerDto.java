@@ -11,9 +11,12 @@ import java.util.Date;
 public class PlayerDto {
     private int id;
     private String name;
+    private String firstNameEng;
+    private String familyNameEng;
     private Date birth;
     private String position;
     private int backNo;
     private String moto;
     private String curYn;
+    private String profileImgSrc;
 }
