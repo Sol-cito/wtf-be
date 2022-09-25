@@ -42,6 +42,8 @@ public class PlayerEntity {
         return PlayerDto.builder()
                 .id(this.id)
                 .name(this.name)
+                .firstNameEng(this.firstNameEng)
+                .familyNameEng(this.familyNameEng)
                 .birth(this.birth)
                 .position(this.position)
                 .backNo(this.backNo)
