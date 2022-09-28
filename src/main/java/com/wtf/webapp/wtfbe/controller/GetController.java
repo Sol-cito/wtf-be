@@ -1,13 +1,14 @@
 package com.wtf.webapp.wtfbe.controller;
 
-import com.wtf.webapp.wtfbe.dto.CommonResponseDto;
+import com.wtf.webapp.wtfbe.dto.MatchResultDto;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
+import com.wtf.webapp.wtfbe.service.MatchService;
 import com.wtf.webapp.wtfbe.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
@@ -20,6 +21,8 @@ import static org.springframework.http.HttpStatus.OK;
 public class GetController {
     private final Environment env;
     private final PlayerService playerService;
+
+    private final MatchService matchService;
 
     @GetMapping(path = "/health")
     public ResponseEntity<String> checkHealth() {
@@ -39,5 +42,15 @@ public class GetController {
     @GetMapping(path = "/player/all")
     public ResponseEntity<List<PlayerDto>> getAllPlayers() {
         return new ResponseEntity<>(playerService.getAllPlayers(), OK);
+    }
+
+    @GetMapping(path = "/match/all")
+    public ResponseEntity<List<MatchResultDto>> getAllMatch() {
+        return new ResponseEntity<>(matchService.getAllMatches(), OK);
+    }
+
+    @GetMapping(path = "/match/latest")
+    public ResponseEntity<List<PlayerDto>> getLatestMatch(@RequestParam int limit) {
+        return null;
     }
 }
