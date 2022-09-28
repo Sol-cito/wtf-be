@@ -11,6 +11,7 @@ import java.util.Date;
 public class MatchResultDto {
     private int id;
     private String opposingTeamName;
+    private String opposingTeamLogoSrc;
     private String matchTypeName;
     private String matchLocation;
     private int goalsScored;

@@ -50,7 +50,7 @@ public class GetController {
     }
 
     @GetMapping(path = "/match/latest")
-    public ResponseEntity<List<PlayerDto>> getLatestMatch(@RequestParam int limit) {
-        return null;
+    public ResponseEntity<List<MatchResultDto>> getLatestMatch() {
+        return new ResponseEntity<>(matchService.getLatestMatches(), OK);
     }
 }

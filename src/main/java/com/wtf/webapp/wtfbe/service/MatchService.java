@@ -18,4 +18,10 @@ public class MatchService {
         matchRepository.findAll().stream().forEach(entity -> result.add(entity.convertToDto()));
         return result;
     }
+
+    public List<MatchResultDto> getLatestMatches() {
+        List<MatchResultDto> result = new ArrayList<>();
+        matchRepository.findTop3ByOrderByMatchDateDesc().stream().forEach(entity -> result.add(entity.convertToDto()));
+        return result;
+    }
 }

@@ -44,6 +44,7 @@ public class MatchResultEntity {
         return MatchResultDto.builder()
                 .id(this.id)
                 .opposingTeamName(this.teamEntity.getName())
+                .opposingTeamLogoSrc(this.teamEntity.getTeamLogoSrc())
                 .matchTypeName(this.matchTypeEntity.getMatchTypeName())
                 .matchLocation(this.matchLocation)
                 .goalsScored(this.goalsScored)

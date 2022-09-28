@@ -20,4 +20,6 @@ public class TeamEntity {
     private String name;
 
     private String hometown;
+
+    private String teamLogoSrc;
 }
