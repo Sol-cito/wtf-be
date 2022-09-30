@@ -35,8 +35,8 @@ public class GetController {
     }
 
     @GetMapping(path = "/player")
-    public ResponseEntity<String> getPlayerByName() {
-        return new ResponseEntity<>("Hello WTF!", OK);
+    public ResponseEntity<List<PlayerDto>> getPlayerByName(@RequestParam(value = "name") String name) {
+        return new ResponseEntity<>(playerService.getPlayerByName(name), OK);
     }
 
     @GetMapping(path = "/player/all")
