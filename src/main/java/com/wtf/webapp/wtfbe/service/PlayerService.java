@@ -1,6 +1,7 @@
 package com.wtf.webapp.wtfbe.service;
 
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
+import com.wtf.webapp.wtfbe.dto.PlayerRegisterDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PlayerService {
+    private final UtilService utilService;
     private final PlayerRepository playerRepository;
 
     public List<PlayerDto> getAllPlayers() {
@@ -28,8 +30,11 @@ public class PlayerService {
     }
 
 
-    public PlayerEntity registerPlayer(PlayerDto playerDto) {
-        return playerRepository.save(playerDto.convertIntoPlayerEntity());
+    public PlayerEntity registerPlayer(PlayerRegisterDto playerRegisterDto) throws Exception {
+        if (playerRegisterDto.getImage() != null) {
+            utilService.transferImageFile(playerRegisterDto.getImage().get(0), playerRegisterDto.getFirstNameEng());
+        }
+        return playerRepository.save(playerRegisterDto.convertIntoPlayerEntity());
     }
 
     public PlayerEntity modifyPlayer(PlayerDto playerDto) throws Exception {
