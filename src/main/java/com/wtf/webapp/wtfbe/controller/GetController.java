@@ -34,23 +34,28 @@ public class GetController {
         return Arrays.asList(env.getActiveProfiles()).stream().findFirst().orElse("");
     }
 
-    @GetMapping(path = "/player")
+    @GetMapping(path = "/player", params = "id")
+    public ResponseEntity<PlayerDto> getPlayerById(@RequestParam(value = "id") int id) throws Exception {
+        return new ResponseEntity<>(playerService.getPlayerById(id), OK);
+    }
+
+    @GetMapping(path = "/player", params = "name")
     public ResponseEntity<List<PlayerDto>> getPlayerByName(@RequestParam(value = "name") String name) {
         return new ResponseEntity<>(playerService.getPlayerByName(name), OK);
     }
 
-    @GetMapping(path = "/player/all")
+    @GetMapping(path = "/player")
     public ResponseEntity<List<PlayerDto>> getAllPlayers() {
         return new ResponseEntity<>(playerService.getAllPlayers(), OK);
     }
 
-    @GetMapping(path = "/match/all")
+    @GetMapping(path = "/match")
     public ResponseEntity<List<MatchResultDto>> getAllMatch() {
-        return new ResponseEntity<>(matchService.getAllMatches(), OK);
+        return new ResponseEntity<>(matchService.getAllMatchResult(), OK);
     }
 
-    @GetMapping(path = "/match/latest")
-    public ResponseEntity<List<MatchResultDto>> getLatestMatch() {
-        return new ResponseEntity<>(matchService.getLatestMatches(), OK);
+    @GetMapping(path = "/match/current")
+    public ResponseEntity<List<MatchResultDto>> getCurrentMatch() {
+        return new ResponseEntity<>(matchService.getCurrentMatchResults(), OK);
     }
 }

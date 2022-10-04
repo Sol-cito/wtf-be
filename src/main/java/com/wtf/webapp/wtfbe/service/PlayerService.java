@@ -29,6 +29,9 @@ public class PlayerService {
         return result;
     }
 
+    public PlayerDto getPlayerById(int id) throws Exception{
+        return playerRepository.findById(id).orElseThrow(Exception::new).convertToDto();
+    }
 
     public PlayerEntity registerPlayer(PlayerRegisterDto playerRegisterDto) throws Exception {
         if (playerRegisterDto.getImage() != null) {

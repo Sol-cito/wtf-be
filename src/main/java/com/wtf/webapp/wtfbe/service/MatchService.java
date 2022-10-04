@@ -13,13 +13,13 @@ import java.util.List;
 public class MatchService {
     private final MatchResultRepository matchRepository;
 
-    public List<MatchResultDto> getAllMatches() {
+    public List<MatchResultDto> getAllMatchResult() {
         List<MatchResultDto> result = new ArrayList<>();
         matchRepository.findAll().stream().forEach(entity -> result.add(entity.convertToDto()));
         return result;
     }
 
-    public List<MatchResultDto> getLatestMatches() {
+    public List<MatchResultDto> getCurrentMatchResults() {
         List<MatchResultDto> result = new ArrayList<>();
         matchRepository.findTop3ByOrderByMatchDateDesc().stream().forEach(entity -> result.add(entity.convertToDto()));
         return result;
