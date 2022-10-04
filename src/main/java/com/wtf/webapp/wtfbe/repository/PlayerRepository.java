@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface PlayerRepository extends JpaRepository<PlayerEntity, Integer> {
     List<PlayerEntity> findByName(String name);
+
+    List<PlayerEntity> findByPosition(String position);
 }

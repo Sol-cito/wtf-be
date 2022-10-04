@@ -34,6 +34,11 @@ public class GetController {
         return Arrays.asList(env.getActiveProfiles()).stream().findFirst().orElse("");
     }
 
+    @GetMapping(path = "/player")
+    public ResponseEntity<List<PlayerDto>> getAllPlayers() {
+        return new ResponseEntity<>(playerService.getAllPlayers(), OK);
+    }
+
     @GetMapping(path = "/player", params = "id")
     public ResponseEntity<PlayerDto> getPlayerById(@RequestParam(value = "id") int id) throws Exception {
         return new ResponseEntity<>(playerService.getPlayerById(id), OK);
@@ -44,9 +49,9 @@ public class GetController {
         return new ResponseEntity<>(playerService.getPlayerByName(name), OK);
     }
 
-    @GetMapping(path = "/player")
-    public ResponseEntity<List<PlayerDto>> getAllPlayers() {
-        return new ResponseEntity<>(playerService.getAllPlayers(), OK);
+    @GetMapping(path = "/player", params = "position")
+    public ResponseEntity<List<PlayerDto>> getPlayerByPosition(@RequestParam(value = "position") String position) {
+        return new ResponseEntity<>(playerService.getPlayerByPosition(position), OK);
     }
 
     @GetMapping(path = "/match")

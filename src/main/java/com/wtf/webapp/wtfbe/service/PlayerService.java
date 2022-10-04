@@ -33,6 +33,12 @@ public class PlayerService {
         return playerRepository.findById(id).orElseThrow(Exception::new).convertToDto();
     }
 
+    public List<PlayerDto> getPlayerByPosition(String position) {
+        List<PlayerDto> result = new ArrayList<>();
+        playerRepository.findByPosition(position).forEach(entity -> result.add(entity.convertToDto()));
+        return result;
+    }
+
     public PlayerEntity registerPlayer(PlayerRegisterDto playerRegisterDto) throws Exception {
         if (playerRegisterDto.getImage() != null) {
             utilService.transferImageFile(playerRegisterDto.getImage().get(0), playerRegisterDto.getFirstNameEng());
