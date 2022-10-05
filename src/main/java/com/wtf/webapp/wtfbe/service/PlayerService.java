@@ -17,6 +17,8 @@ public class PlayerService {
     private final UtilService utilService;
     private final PlayerRepository playerRepository;
 
+    private final static String FILE_PATH_PREFIX = "/img/player/";
+
     public List<PlayerDto> getAllPlayers() {
         List<PlayerDto> result = new ArrayList<>();
         playerRepository.findAll().stream().forEach(entity -> result.add(entity.convertToDto()));
@@ -29,7 +31,7 @@ public class PlayerService {
         return result;
     }
 
-    public PlayerDto getPlayerById(int id) throws Exception{
+    public PlayerDto getPlayerById(int id) throws Exception {
         return playerRepository.findById(id).orElseThrow(Exception::new).convertToDto();
     }
 
@@ -40,10 +42,13 @@ public class PlayerService {
     }
 
     public PlayerEntity registerPlayer(PlayerRegisterDto playerRegisterDto) throws Exception {
+        String imageFileFullName = "";
         if (playerRegisterDto.getImage() != null) {
-            utilService.transferImageFile(playerRegisterDto.getImage().get(0), playerRegisterDto.getFirstNameEng());
+            imageFileFullName = utilService.transferImageFile(playerRegisterDto.getImage().get(0), playerRegisterDto.getFirstNameEng());
         }
-        return playerRepository.save(playerRegisterDto.convertIntoPlayerEntity());
+        PlayerEntity playerEntity = playerRegisterDto.convertIntoPlayerEntity();
+        playerEntity.setProfileImgSrc(FILE_PATH_PREFIX + imageFileFullName);
+        return playerRepository.save(playerEntity);
     }
 
     public PlayerEntity modifyPlayer(PlayerDto playerDto) throws Exception {

@@ -2,10 +2,7 @@ package com.wtf.webapp.wtfbe.entity;
 
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -36,6 +33,7 @@ public class PlayerEntity {
 
     private String curYn;
 
+    @Setter
     private String profileImgSrc;
 
     public PlayerDto convertToDto() {

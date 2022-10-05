@@ -13,9 +13,14 @@ public class UtilService {
     @Value("${file.upload.location}")
     private String fileUploadLocation;
 
-    public void transferImageFile(MultipartFile file, String fileName) throws Exception {
+    public String transferImageFile(MultipartFile file, String fileName) throws Exception {
         String sourceFileName = file.getOriginalFilename();
-        String sourceFileNameExtension = this.getFileExtension(sourceFileName).toLowerCase();
+        String sourceFileNameExtension;
+        if (sourceFileName == null) {
+            sourceFileNameExtension = ".jpg";
+        } else {
+            sourceFileNameExtension = this.getFileExtension(sourceFileName).toLowerCase();
+        }
 
         String filePath = new StringBuilder()
                 .append(fileUploadLocation)
@@ -26,6 +31,7 @@ public class UtilService {
         File targetFile = new File(filePath);
         targetFile.getParentFile().mkdirs();
         file.transferTo(targetFile);
+        return fileName.toLowerCase() + "_profile" + sourceFileNameExtension;
     }
 
     public String getFileExtension(String fullFileName) {
