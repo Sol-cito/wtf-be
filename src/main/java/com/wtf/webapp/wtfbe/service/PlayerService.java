@@ -1,7 +1,7 @@
 package com.wtf.webapp.wtfbe.service;
 
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
-import com.wtf.webapp.wtfbe.dto.PlayerRegisterDto;
+import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,18 +40,23 @@ public class PlayerService {
         return result;
     }
 
-    public PlayerEntity registerPlayer(PlayerRegisterDto playerRegisterDto) throws Exception {
+    public PlayerEntity registerPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
         String imageFileFullName = "";
-        if (playerRegisterDto.getImage() != null) {
-            imageFileFullName = utilService.transferImageFile(playerRegisterDto.getImage().get(0), playerRegisterDto.getFirstNameEng());
+        if (playerMultipartDto.getImage() != null) {
+            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0), playerMultipartDto.getFirstNameEng());
         }
-        PlayerEntity playerEntity = playerRegisterDto.convertIntoPlayerEntity();
+        PlayerEntity playerEntity = playerMultipartDto.convertIntoPlayerEntity();
         playerEntity.setProfileImgSrc(FILE_PATH_PREFIX + imageFileFullName);
         return playerRepository.save(playerEntity);
     }
 
-    public PlayerEntity modifyPlayer(PlayerDto playerDto) throws Exception {
-        PlayerEntity result = playerRepository.findById(playerDto.getId()).orElseThrow(Exception::new);
+    public PlayerEntity modifyPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
+        String imageFileFullName = "";
+        if (playerMultipartDto.getImage() != null) {
+            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0), playerMultipartDto.getFirstNameEng());
+        }
+        PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
+        result.setProfileImgSrc(imageFileFullName);
         return playerRepository.save(result);
     }
 }

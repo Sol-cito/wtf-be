@@ -13,7 +13,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class PlayerRegisterDto {
+public class PlayerMultipartDto {
+    private String id;
     private String name;
     private String firstNameEng;
     private String familyNameEng;
