@@ -1,9 +1,12 @@
 package com.wtf.webapp.wtfbe.entity;
 
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
+import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -49,5 +52,14 @@ public class PlayerEntity {
                 .curYn(this.curYn)
                 .profileImgSrc(this.profileImgSrc)
                 .build();
+    }
+
+    public void setAllFieldByPlayerMultipartDto(PlayerMultipartDto playerMultipartDto) throws ParseException {
+        this.name = playerMultipartDto.getName();
+        this.firstNameEng = playerMultipartDto.getFirstNameEng();
+        this.familyNameEng = playerMultipartDto.getFamilyNameEng();
+        this.birth = new SimpleDateFormat("yyyy-MM-dd").parse(playerMultipartDto.getBirth());
+        this.moto = playerMultipartDto.getMoto();
+        this.curYn = playerMultipartDto.getCurYn();
     }
 }

@@ -56,7 +56,8 @@ public class PlayerService {
             imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0), playerMultipartDto.getFirstNameEng());
         }
         PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
-        result.setProfileImgSrc(imageFileFullName);
+        result.setAllFieldByPlayerMultipartDto(playerMultipartDto);
+        result.setProfileImgSrc(FILE_PATH_PREFIX + imageFileFullName);
         return playerRepository.save(result);
     }
 }
