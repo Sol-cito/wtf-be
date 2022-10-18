@@ -55,12 +55,10 @@ public class GetController {
     }
 
     @GetMapping(path = "/match")
-    public ResponseEntity<List<MatchResultDto>> getAllMatch() {
-        return new ResponseEntity<>(matchService.getAllMatchResult(), OK);
-    }
-
-    @GetMapping(path = "/match/current")
-    public ResponseEntity<List<MatchResultDto>> getCurrentMatch() {
-        return new ResponseEntity<>(matchService.getCurrentMatchResults(), OK);
+    public ResponseEntity<List<MatchResultDto>> getMatchResult(
+            @RequestParam(value = "startIdx") String startIdx,
+            @RequestParam(value = "limit", required = false, defaultValue = "-1") int limit,
+            @RequestParam(value = "order", required = false, defaultValue = "desc") String order) {
+        return new ResponseEntity<>(matchService.getMatchResult(), OK);
     }
 }
