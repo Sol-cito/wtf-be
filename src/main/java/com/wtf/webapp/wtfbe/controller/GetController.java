@@ -21,7 +21,6 @@ import static org.springframework.http.HttpStatus.OK;
 public class GetController {
     private final Environment env;
     private final PlayerService playerService;
-
     private final MatchService matchService;
 
     @GetMapping(path = "/health")
@@ -56,9 +55,9 @@ public class GetController {
 
     @GetMapping(path = "/match")
     public ResponseEntity<List<MatchResultDto>> getMatchResult(
-            @RequestParam(value = "startIdx") String startIdx,
-            @RequestParam(value = "limit", required = false, defaultValue = "-1") int limit,
-            @RequestParam(value = "order", required = false, defaultValue = "desc") String order) {
-        return new ResponseEntity<>(matchService.getMatchResult(), OK);
+            @RequestParam(value = "startIdx", required = false) Integer startIdx,
+            @RequestParam(value = "limit", required = false) Integer limit,
+            @RequestParam(value = "order", required = false) String order) throws ClassNotFoundException {
+        return new ResponseEntity<>(matchService.getMatchResult(startIdx, limit, order), OK);
     }
 }
