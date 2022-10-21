@@ -40,7 +40,11 @@ public class JPQLBuilder {
     }
     public void addOrderBy() {
         if (this.jpqlParamVO.isOrderEmpty()) return;
-        this.sb.append(" ORDER BY ").append("entity.").append(this.jpqlParamVO.getOrder());
+        this.sb.append(" ORDER BY ")
+                .append("entity.")
+                .append(this.jpqlParamVO.getOrder().getEntityFieldName())
+                .append(" ")
+                .append(this.jpqlParamVO.getOrder().getOrderSortKeyword());
     }
 
     public String getStringQuery() {

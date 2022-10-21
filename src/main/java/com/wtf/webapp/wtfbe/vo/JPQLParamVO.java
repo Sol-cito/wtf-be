@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.vo;
 
+import com.wtf.webapp.wtfbe.dto.QueryOrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,13 +17,13 @@ public class JPQLParamVO {
     private Map<String, String> whereCondition;
     private Integer startIdx;
     private Integer limit;
-    private String order;
+    private QueryOrderDto order;
 
     public boolean isWhereConditionEmpty() {
         return whereCondition == null || whereCondition.isEmpty();
     }
 
     public boolean isOrderEmpty() {
-        return order == null || order.isEmpty();
+        return order == null;
     }
 }

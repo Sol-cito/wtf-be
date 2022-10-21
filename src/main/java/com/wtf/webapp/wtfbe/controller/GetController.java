@@ -1,6 +1,8 @@
 package com.wtf.webapp.wtfbe.controller;
 
+import com.wtf.webapp.wtfbe.annotation.QueryStringArgResolver;
 import com.wtf.webapp.wtfbe.dto.MatchResultDto;
+import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.service.MatchService;
 import com.wtf.webapp.wtfbe.service.PlayerService;
@@ -54,10 +56,8 @@ public class GetController {
     }
 
     @GetMapping(path = "/match")
-    public ResponseEntity<List<MatchResultDto>> getMatchResult(
-            @RequestParam(value = "startIdx", required = false) Integer startIdx,
-            @RequestParam(value = "limit", required = false) Integer limit,
-            @RequestParam(value = "order", required = false) String order) throws ClassNotFoundException {
-        return new ResponseEntity<>(matchService.getMatchResult(startIdx, limit, order), OK);
+    public ResponseEntity<List<MatchResultDto>> getMatchResult (
+            @QueryStringArgResolver MatchResultRequestDto request) throws ClassNotFoundException {
+        return new ResponseEntity<>(matchService.getMatchResult(request), OK);
     }
 }
