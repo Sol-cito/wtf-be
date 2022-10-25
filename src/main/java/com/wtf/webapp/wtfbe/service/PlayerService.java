@@ -19,15 +19,11 @@ public class PlayerService {
     private final static String FILE_PATH_PREFIX = "/img/player/";
 
     public List<PlayerDto> getAllPlayers() {
-        List<PlayerDto> result = new ArrayList<>();
-        playerRepository.findAll().stream().forEach(entity -> result.add(entity.convertToDto()));
-        return result;
+        return playerRepository.findAll().stream().map(entity -> entity.convertToDto()).toList();
     }
 
     public List<PlayerDto> getPlayerByName(String name) {
-        List<PlayerDto> result = new ArrayList<>();
-        playerRepository.findByName(name).forEach(entity -> result.add(entity.convertToDto()));
-        return result;
+        return playerRepository.findByName(name).stream().map(entity -> entity.convertToDto()).toList();
     }
 
     public PlayerDto getPlayerById(int id) throws Exception {
@@ -35,9 +31,7 @@ public class PlayerService {
     }
 
     public List<PlayerDto> getPlayerByPosition(String position) {
-        List<PlayerDto> result = new ArrayList<>();
-        playerRepository.findByPosition(position).forEach(entity -> result.add(entity.convertToDto()));
-        return result;
+        return playerRepository.findByPosition(position).stream().map(entity -> entity.convertToDto()).toList();
     }
 
     public PlayerEntity registerPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {

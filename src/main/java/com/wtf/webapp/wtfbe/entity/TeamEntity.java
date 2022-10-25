@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.entity;
 
+import com.wtf.webapp.wtfbe.dto.TeamDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +23,13 @@ public class TeamEntity {
     private String hometown;
 
     private String teamLogoSrc;
+
+    public TeamDto convertToTeamDto() {
+        return TeamDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .hometown(this.hometown)
+                .teamLogoSrc(this.teamLogoSrc)
+                .build();
+    }
 }

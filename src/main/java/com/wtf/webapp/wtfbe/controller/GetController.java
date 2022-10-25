@@ -4,8 +4,10 @@ import com.wtf.webapp.wtfbe.annotation.QueryStringArgResolver;
 import com.wtf.webapp.wtfbe.dto.MatchResultDto;
 import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
+import com.wtf.webapp.wtfbe.dto.TeamDto;
 import com.wtf.webapp.wtfbe.service.MatchService;
 import com.wtf.webapp.wtfbe.service.PlayerService;
+import com.wtf.webapp.wtfbe.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ public class GetController {
     private final Environment env;
     private final PlayerService playerService;
     private final MatchService matchService;
+
+    private final TeamService teamService;
 
     @GetMapping(path = "/health")
     public ResponseEntity<String> checkHealth() {
@@ -59,5 +63,10 @@ public class GetController {
     public ResponseEntity<List<MatchResultDto>> getMatchResult (
             @QueryStringArgResolver MatchResultRequestDto request) throws ClassNotFoundException {
         return new ResponseEntity<>(matchService.getMatchResult(request), OK);
+    }
+
+    @GetMapping(path = "/team")
+    public ResponseEntity<List<TeamDto>> getAllTeams() {
+        return new ResponseEntity<>(teamService.getAllTeams(), OK);
     }
 }
