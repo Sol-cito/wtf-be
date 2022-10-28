@@ -5,16 +5,19 @@ import com.wtf.webapp.wtfbe.dto.MatchResultDto;
 import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.TeamDto;
+import com.wtf.webapp.wtfbe.service.ImageService;
 import com.wtf.webapp.wtfbe.service.MatchService;
 import com.wtf.webapp.wtfbe.service.PlayerService;
 import com.wtf.webapp.wtfbe.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,12 +29,18 @@ public class GetController {
     private final Environment env;
     private final PlayerService playerService;
     private final MatchService matchService;
-
     private final TeamService teamService;
+
+    private final ImageService imageService;
 
     @GetMapping(path = "/health")
     public ResponseEntity<String> checkHealth() {
         return new ResponseEntity<>("Hello WTF!", OK);
+    }
+
+    @GetMapping(path = "/image", params = "src", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(@RequestParam(value = "src") String src) throws IOException {
+        return new ResponseEntity<>(imageService.getImageAsByteArray(src), OK);
     }
 
     @GetMapping(path = "/profile")
@@ -60,7 +69,7 @@ public class GetController {
     }
 
     @GetMapping(path = "/match")
-    public ResponseEntity<List<MatchResultDto>> getMatchResult (
+    public ResponseEntity<List<MatchResultDto>> getMatchResult(
             @QueryStringArgResolver MatchResultRequestDto request) throws ClassNotFoundException {
         return new ResponseEntity<>(matchService.getMatchResult(request), OK);
     }

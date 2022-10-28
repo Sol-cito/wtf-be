@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.service;
 
+import com.wtf.webapp.wtfbe.common.CommonConstant;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
@@ -15,8 +16,6 @@ import java.util.List;
 public class PlayerService {
     private final UtilService utilService;
     private final PlayerRepository playerRepository;
-
-    private final static String FILE_PATH_PREFIX = "/img/player/";
 
     public List<PlayerDto> getAllPlayers() {
         return playerRepository.findAll().stream().map(entity -> entity.convertToDto()).toList();
@@ -40,7 +39,7 @@ public class PlayerService {
             imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0), playerMultipartDto.getFirstNameEng());
         }
         PlayerEntity playerEntity = playerMultipartDto.convertIntoPlayerEntity();
-        playerEntity.setProfileImgSrc(FILE_PATH_PREFIX + imageFileFullName);
+        playerEntity.setProfileImgSrc(CommonConstant.FILE_PATH_PREFIX + imageFileFullName);
         return playerRepository.save(playerEntity);
     }
 
@@ -51,7 +50,7 @@ public class PlayerService {
         }
         PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
         result.setAllFieldByPlayerMultipartDto(playerMultipartDto);
-        result.setProfileImgSrc(FILE_PATH_PREFIX + imageFileFullName);
+        result.setProfileImgSrc(CommonConstant.FILE_PATH_PREFIX + imageFileFullName);
         return playerRepository.save(result);
     }
 }

@@ -10,22 +10,23 @@ import java.io.File;
 @Service
 @RequiredArgsConstructor
 public class UtilService {
-    @Value("${file.upload.location}")
-    private String fileUploadLocation;
+    @Value("${image.file.location}")
+    private String imageStorageLocation;
 
     public String transferImageFile(MultipartFile file, String fileName) throws Exception {
         String sourceFileName = file.getOriginalFilename();
         String sourceFileNameExtension;
         if (sourceFileName == null) {
-            sourceFileNameExtension = ".jpg";
+            sourceFileNameExtension = "jpg";
         } else {
             sourceFileNameExtension = this.getFileExtension(sourceFileName).toLowerCase();
         }
 
         String filePath = new StringBuilder()
-                .append(fileUploadLocation)
+                .append(imageStorageLocation)
                 .append(fileName.toLowerCase())
                 .append("_profile")
+                .append(".")
                 .append(sourceFileNameExtension)
                 .toString();
         File targetFile = new File(filePath);
@@ -41,7 +42,6 @@ public class UtilService {
             sb.append(fullFileName.charAt(pointer));
             pointer--;
         }
-        sb.append(".");
         return sb.reverse().toString();
     }
 }
