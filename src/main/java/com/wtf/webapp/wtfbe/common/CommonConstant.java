@@ -4,5 +4,5 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class CommonConstant {
-    public final static String FILE_PATH_PREFIX = "/img/player/";
+    public final static String PLAYER_IMAGE_PATH_PREFIX = "/player/";
 }

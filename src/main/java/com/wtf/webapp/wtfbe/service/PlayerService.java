@@ -7,8 +7,8 @@ import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,24 +33,32 @@ public class PlayerService {
         return playerRepository.findByPosition(position).stream().map(entity -> entity.convertToDto()).toList();
     }
 
+    @Transactional
     public PlayerEntity registerPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
+        PlayerEntity playerEntity = playerMultipartDto.convertIntoPlayerEntity();
+
         String imageFileFullName = "";
         if (playerMultipartDto.getImage() != null) {
-            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0), playerMultipartDto.getFirstNameEng());
+            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
+                    CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
+                    playerMultipartDto.getFirstNameEng());
+            playerEntity.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName);
         }
-        PlayerEntity playerEntity = playerMultipartDto.convertIntoPlayerEntity();
-        playerEntity.setProfileImgSrc(CommonConstant.FILE_PATH_PREFIX + imageFileFullName);
         return playerRepository.save(playerEntity);
     }
 
+    @Transactional
     public PlayerEntity modifyPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
+        PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
+
         String imageFileFullName = "";
         if (playerMultipartDto.getImage() != null) {
-            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0), playerMultipartDto.getFirstNameEng());
+            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
+                    CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
+                    playerMultipartDto.getFirstNameEng());
+            result.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName);
         }
-        PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
         result.setAllFieldByPlayerMultipartDto(playerMultipartDto);
-        result.setProfileImgSrc(CommonConstant.FILE_PATH_PREFIX + imageFileFullName);
         return playerRepository.save(result);
     }
 }

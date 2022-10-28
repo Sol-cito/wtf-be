@@ -13,7 +13,7 @@ public class UtilService {
     @Value("${image.file.location}")
     private String imageStorageLocation;
 
-    public String transferImageFile(MultipartFile file, String fileName) throws Exception {
+    public String transferImageFile(MultipartFile file, String srcPathOfImage, String fileName) throws Exception {
         String sourceFileName = file.getOriginalFilename();
         String sourceFileNameExtension;
         if (sourceFileName == null) {
@@ -24,6 +24,7 @@ public class UtilService {
 
         String filePath = new StringBuilder()
                 .append(imageStorageLocation)
+                .append(srcPathOfImage)
                 .append(fileName.toLowerCase())
                 .append("_profile")
                 .append(".")
@@ -32,7 +33,7 @@ public class UtilService {
         File targetFile = new File(filePath);
         targetFile.getParentFile().mkdirs();
         file.transferTo(targetFile);
-        return fileName.toLowerCase() + "_profile" + sourceFileNameExtension;
+        return fileName.toLowerCase() + "_profile" + "." + sourceFileNameExtension;
     }
 
     public String getFileExtension(String fullFileName) {
