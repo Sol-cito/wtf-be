@@ -25,6 +25,7 @@ dependencies {
     implementation 'mysql:mysql-connector-java'
     implementation 'org.flywaydb:flyway-mysql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.apache.tika:tika-core:2.4.1'
 }
 
 tasks.named('test') {
