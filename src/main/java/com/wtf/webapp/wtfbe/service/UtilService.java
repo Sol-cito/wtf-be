@@ -31,7 +31,8 @@ public class UtilService {
                 .append(imageStorageLocation)
                 .append(srcPathOfImage)
                 .append(fileName.toLowerCase())
-                .append("_profile")
+                .append("_profile_")
+                .append(FormatUtility.getTodayDateAsString())
                 .append(".")
                 .append(sourceFileNameExtension)
                 .toString();
