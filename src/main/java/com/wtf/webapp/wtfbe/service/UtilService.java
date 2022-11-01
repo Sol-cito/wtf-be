@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.service;
 
+import com.wtf.webapp.wtfbe.utility.FormatUtility;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,7 @@ public class UtilService {
         File targetFile = new File(filePath);
         targetFile.getParentFile().mkdirs();
         file.transferTo(targetFile);
-        return fileName.toLowerCase() + "_profile" + "." + sourceFileNameExtension;
+        return fileName.toLowerCase() + "_profile" + "_" + FormatUtility.getTodayDateAsString() + "." + sourceFileNameExtension;
     }
 
     public String getMIMEType(InputStream inputStream) throws IOException, IllegalArgumentException {
