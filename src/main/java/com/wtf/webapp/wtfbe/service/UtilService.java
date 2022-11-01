@@ -40,9 +40,13 @@ public class UtilService {
         return fileName.toLowerCase() + "_profile" + "." + sourceFileNameExtension;
     }
 
-    public String getMimeTypeExtension(InputStream inputStream) throws IOException {
-        String actualExtension = new Tika().detect(inputStream);
-        return actualExtension.replace("image/", "");
+    public String getMIMEType(InputStream inputStream) throws IOException, IllegalArgumentException {
+        String MIMEtype = new Tika().detect(inputStream);
+        String[] chunks = MIMEtype.split("/");
+        if (chunks.length < 2) {
+            throw new IllegalArgumentException("InputStream is not formed as a typical MINE type");
+        }
+        return chunks[1];
     }
 
     public String getFileExtension(String fullFileName) {
