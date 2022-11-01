@@ -5,6 +5,7 @@ import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
+import com.wtf.webapp.wtfbe.utility.FormatUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +57,9 @@ public class PlayerService {
             imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
                     CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
                     playerMultipartDto.getFirstNameEng());
-            result.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName);
+            result.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName + "_" + FormatUtility.getTodayDateAsString());
+        } else {
+            result.setProfileImgSrc(null);
         }
         result.setAllFieldByPlayerMultipartDto(playerMultipartDto);
         return playerRepository.save(result);

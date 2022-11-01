@@ -2,10 +2,18 @@ package com.wtf.webapp.wtfbe.utility;
 
 import lombok.experimental.UtilityClass;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 @UtilityClass
 public class FormatUtility {
+
+    public String getTodayDateAsString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        return sdf.format(new Date(System.currentTimeMillis()));
+    }
+
     public String stringToJson(String target) {
         target = target.replace("\"", "");
         HashMap<String, String> urlMap = new HashMap<>() {{
