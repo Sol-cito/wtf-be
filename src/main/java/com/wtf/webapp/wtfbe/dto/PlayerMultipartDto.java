@@ -22,8 +22,9 @@ public class PlayerMultipartDto {
     private String position;
     private String backNo;
     private String moto;
-
     private String curYn;
+
+    private String profileImgSrc;
 
     private List<MultipartFile> image;
 

@@ -9,6 +9,11 @@ import java.util.HashMap;
 @UtilityClass
 public class FormatUtility {
 
+    public String getTodayDateWithTimeAsString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return sdf.format(new Date(System.currentTimeMillis()));
+    }
+
     public String getTodayDateAsString(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         return sdf.format(new Date(System.currentTimeMillis()));

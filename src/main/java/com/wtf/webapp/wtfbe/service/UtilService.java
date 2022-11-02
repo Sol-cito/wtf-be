@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -27,19 +28,20 @@ public class UtilService {
             sourceFileNameExtension = this.getFileExtension(sourceFileName).toLowerCase();
         }
 
-        String filePath = new StringBuilder()
-                .append(imageStorageLocation)
-                .append(srcPathOfImage)
-                .append(fileName.toLowerCase())
-                .append("_profile_")
-                .append(FormatUtility.getTodayDateAsString())
-                .append(".")
-                .append(sourceFileNameExtension)
-                .toString();
+        String filePath = imageStorageLocation +
+                srcPathOfImage +
+                fileName.toLowerCase() +
+                "_profile_" +
+                FormatUtility.getTodayDateWithTimeAsString() +
+                "." +
+                sourceFileNameExtension;
         File targetFile = new File(filePath);
-        targetFile.getParentFile().mkdirs();
+        boolean resultOfFileCreation = targetFile.getParentFile().mkdirs();
+        if (!resultOfFileCreation) {
+            throw new IOException("File writing fails");
+        }
         file.transferTo(targetFile);
-        return fileName.toLowerCase() + "_profile" + "_" + FormatUtility.getTodayDateAsString() + "." + sourceFileNameExtension;
+        return fileName.toLowerCase() + "_profile" + "_" + FormatUtility.getTodayDateWithTimeAsString() + "." + sourceFileNameExtension;
     }
 
     public String getMIMEType(InputStream inputStream) throws IOException, IllegalArgumentException {

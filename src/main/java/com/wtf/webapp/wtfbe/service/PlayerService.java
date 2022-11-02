@@ -5,6 +5,7 @@ import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
+import com.wtf.webapp.wtfbe.utility.CommonUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +19,11 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
 
     public List<PlayerDto> getAllPlayers() {
-        return playerRepository.findAll().stream().map(entity -> entity.convertToDto()).toList();
+        return playerRepository.findAll().stream().map(PlayerEntity::convertToDto).toList();
     }
 
     public List<PlayerDto> getPlayerByName(String name) {
-        return playerRepository.findByName(name).stream().map(entity -> entity.convertToDto()).toList();
+        return playerRepository.findByName(name).stream().map(PlayerEntity::convertToDto).toList();
     }
 
     public PlayerDto getPlayerById(int id) throws Exception {
@@ -30,14 +31,14 @@ public class PlayerService {
     }
 
     public List<PlayerDto> getPlayerByPosition(String position) {
-        return playerRepository.findByPosition(position).stream().map(entity -> entity.convertToDto()).toList();
+        return playerRepository.findByPosition(position).stream().map(PlayerEntity::convertToDto).toList();
     }
 
     @Transactional
     public PlayerEntity registerPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
         PlayerEntity playerEntity = playerMultipartDto.convertIntoPlayerEntity();
 
-        String imageFileFullName = "";
+        String imageFileFullName;
         if (playerMultipartDto.getImage() != null) {
             imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
                     CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
@@ -51,13 +52,13 @@ public class PlayerService {
     public PlayerEntity modifyPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
         PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
 
-        String imageFileFullName = "";
+        String imageFileFullName;
         if (playerMultipartDto.getImage() != null) {
             imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
                     CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
                     playerMultipartDto.getFirstNameEng());
             result.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName);
-        } else {
+        } else if (CommonUtility.isEmpty(playerMultipartDto.getProfileImgSrc())) {
             result.setProfileImgSrc(null);
         }
         result.setAllFieldByPlayerMultipartDto(playerMultipartDto);
