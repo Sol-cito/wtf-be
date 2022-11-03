@@ -36,10 +36,7 @@ public class UtilService {
                 "." +
                 sourceFileNameExtension;
         File targetFile = new File(filePath);
-        boolean resultOfFileCreation = targetFile.getParentFile().mkdirs();
-        if (!resultOfFileCreation) {
-            throw new IOException("File writing fails");
-        }
+        targetFile.getParentFile().mkdirs();
         file.transferTo(targetFile);
         return fileName.toLowerCase() + "_profile" + "_" + FormatUtility.getTodayDateWithTimeAsString() + "." + sourceFileNameExtension;
     }
