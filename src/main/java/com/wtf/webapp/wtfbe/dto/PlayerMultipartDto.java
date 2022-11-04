@@ -46,7 +46,7 @@ public class PlayerMultipartDto {
     }
 
     public boolean isPlayerProfileImageNotEmpty() {
-        return this.image.size() != 0 && !CommonUtility.isEmpty(this.image.get(0));
+        return this.image.size() > 0 && !CommonUtility.isEmpty(this.image.get(0));
     }
 
     public boolean isPlayerProfileImgDeletedFromUser(){
@@ -54,7 +54,7 @@ public class PlayerMultipartDto {
     }
 
     public boolean isPlayerTorsoImageNotEmpty() {
-        return this.image.size() <= 1 || CommonUtility.isEmpty(this.image.get(1));
+        return this.image.size() > 1 && !CommonUtility.isEmpty(this.image.get(1));
     }
 
     public boolean isPlayerTorsoImgDeletedFromUser(){
