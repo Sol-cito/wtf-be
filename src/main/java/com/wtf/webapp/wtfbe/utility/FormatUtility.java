@@ -71,4 +71,14 @@ public class FormatUtility {
         }
         return sb.toString();
     }
+
+    public String getFileExtension(String fullFileName) {
+        StringBuilder sb = new StringBuilder();
+        int pointer = fullFileName.length() - 1;
+        while (fullFileName.charAt(pointer) != '.') {
+            sb.append(fullFileName.charAt(pointer));
+            pointer--;
+        }
+        return sb.reverse().toString();
+    }
 }

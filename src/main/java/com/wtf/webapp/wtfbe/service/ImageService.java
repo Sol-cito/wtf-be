@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.service;
 
+import com.wtf.webapp.wtfbe.utility.FormatUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,12 @@ public class ImageService {
         BufferedImage bufferedImage = ImageIO.read(imageFile);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        String fileExtension = utilService.getFileExtension(imageFile.getName());
+        String fileExtension = FormatUtility.getFileExtension(imageFile.getName());
         ImageIO.write(bufferedImage, fileExtension, baos);
         if (baos.size() == 0) {
             String mineType = utilService.getMIMEType(inputStream);
             ImageIO.write(bufferedImage, mineType, baos);
         }
-        byte[] imageInByte = baos.toByteArray();
-        return imageInByte;
+        return baos.toByteArray();
     }
 }

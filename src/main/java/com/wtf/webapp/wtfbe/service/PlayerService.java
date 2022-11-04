@@ -1,11 +1,10 @@
 package com.wtf.webapp.wtfbe.service;
 
-import com.wtf.webapp.wtfbe.common.CommonConstant;
+import com.wtf.webapp.wtfbe.dto.MultipartImageFileDto;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
-import com.wtf.webapp.wtfbe.utility.CommonUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,30 +37,41 @@ public class PlayerService {
     public PlayerEntity registerPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
         PlayerEntity playerEntity = playerMultipartDto.convertIntoPlayerEntity();
 
-        String imageFileFullName;
         if (playerMultipartDto.getImage() != null) {
-            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
-                    CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
-                    playerMultipartDto.getFirstNameEng());
-            playerEntity.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName);
+            if (playerMultipartDto.isPlayerProfileImageNotEmpty()) {
+                MultipartImageFileDto playerProfileMultipartDto = playerMultipartDto.getPlayerProfileMultipartDto();
+                utilService.transferImageFile(playerProfileMultipartDto);
+                playerEntity.setProfileImgSrc(playerProfileMultipartDto.getFullFileName());
+            }
+            if (playerMultipartDto.isPlayerTorsoImageNotEmpty()) {
+                MultipartImageFileDto playerTorsoMultipartDto = playerMultipartDto.getPlayerTorsoMultipartDto();
+                utilService.transferImageFile(playerTorsoMultipartDto);
+                playerEntity.setProfileTorsoImgSrc(playerTorsoMultipartDto.getFullFileName());
+            }
         }
         return playerRepository.save(playerEntity);
     }
 
     @Transactional
     public PlayerEntity modifyPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
-        PlayerEntity result = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
-
-        String imageFileFullName;
+        PlayerEntity playerEntity = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
         if (playerMultipartDto.getImage() != null) {
-            imageFileFullName = utilService.transferImageFile(playerMultipartDto.getImage().get(0),
-                    CommonConstant.PLAYER_IMAGE_PATH_PREFIX,
-                    playerMultipartDto.getFirstNameEng());
-            result.setProfileImgSrc(CommonConstant.PLAYER_IMAGE_PATH_PREFIX + imageFileFullName);
-        } else if (CommonUtility.isEmpty(playerMultipartDto.getProfileImgSrc())) {
-            result.setProfileImgSrc(null);
+            if (playerMultipartDto.isPlayerProfileImageNotEmpty()) {
+                MultipartImageFileDto playerProfileMultipartDto = playerMultipartDto.getPlayerProfileMultipartDto();
+                utilService.transferImageFile(playerProfileMultipartDto);
+                playerEntity.setProfileImgSrc(playerProfileMultipartDto.getFullFileName());
+            } else if (playerMultipartDto.isPlayerProfileImgDeletedFromUser()) {
+                playerEntity.setProfileImgSrc(null);
+            }
+            if (playerMultipartDto.isPlayerTorsoImageNotEmpty()) {
+                MultipartImageFileDto playerTorsoMultipartDto = playerMultipartDto.getPlayerTorsoMultipartDto();
+                utilService.transferImageFile(playerTorsoMultipartDto);
+                playerEntity.setProfileTorsoImgSrc(playerTorsoMultipartDto.getFullFileName());
+            } else if (playerMultipartDto.isPlayerTorsoImgDeletedFromUser()) {
+                playerEntity.setProfileTorsoImgSrc(null);
+            }
         }
-        result.setAllFieldByPlayerMultipartDto(playerMultipartDto);
-        return playerRepository.save(result);
+        playerEntity.setAllFieldByPlayerMultipartDto(playerMultipartDto);
+        return playerRepository.save(playerEntity);
     }
 }
