@@ -1,15 +1,12 @@
 package com.wtf.webapp.wtfbe.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.tika.Tika;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,6 @@ public class ImageService {
             ImageIO.write(bufferedImage, mimeExtension, baos);
         }
         baos.flush();
-
 
         byte[] imageInByte = baos.toByteArray();
         baos.close();

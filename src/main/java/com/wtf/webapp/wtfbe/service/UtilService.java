@@ -42,7 +42,10 @@ public class UtilService {
 
     public String getMimeTypeExtension(InputStream inputStream) throws IOException {
         String actualExtension = new Tika().detect(inputStream);
-        return actualExtension.replace("image/", "");
+        if(!actualExtension.contains("/")){
+            throw new IOException("it is not a MIME type"); // TO-DO : business exception apply
+        }
+        return actualExtension.split("/")[1];
     }
 
     public String getFileExtension(String fullFileName) {
