@@ -2,10 +2,7 @@ package com.wtf.webapp.wtfbe.entity;
 
 import com.wtf.webapp.wtfbe.dto.TeamDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
@@ -22,6 +19,7 @@ public class TeamEntity {
 
     private String hometown;
 
+    @Setter
     private String teamLogoSrc;
 
     public TeamDto convertToTeamDto() {
