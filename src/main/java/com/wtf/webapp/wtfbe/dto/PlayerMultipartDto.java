@@ -1,6 +1,8 @@
 package com.wtf.webapp.wtfbe.dto;
 
+import com.wtf.webapp.wtfbe.common.CommonConstant;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
+import com.wtf.webapp.wtfbe.utility.CommonUtility;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,8 +24,11 @@ public class PlayerMultipartDto {
     private String position;
     private String backNo;
     private String moto;
-
     private String curYn;
+
+    private String profileImgSrc;
+
+    private String profileTorsoImgSrc;
 
     private List<MultipartFile> image;
 
@@ -37,6 +42,39 @@ public class PlayerMultipartDto {
                 .backNo(Integer.parseInt(this.backNo))
                 .moto(this.moto)
                 .curYn(this.curYn)
+                .build();
+    }
+
+    public boolean isPlayerProfileImageNotEmpty() {
+        return this.image.size() > 0 && !CommonUtility.isEmpty(this.image.get(0));
+    }
+
+    public boolean isPlayerProfileImgDeletedFromUser(){
+        return CommonUtility.isEmpty(this.profileImgSrc);
+    }
+
+    public boolean isPlayerTorsoImageNotEmpty() {
+        return this.image.size() > 1 && !CommonUtility.isEmpty(this.image.get(1));
+    }
+
+    public boolean isPlayerTorsoImgDeletedFromUser(){
+        return CommonUtility.isEmpty(this.profileTorsoImgSrc);
+    }
+
+
+    public MultipartImageFileDto getPlayerProfileMultipartDto() {
+        return MultipartImageFileDto.builder()
+                .srcPathOfImage(CommonConstant.PLAYER_IMAGE_PATH_PREFIX)
+                .file(this.image.get(0))
+                .additionalName(this.firstNameEng + "_" + CommonConstant.PLAYER_IMAGE_PROFILE_POSTFIX)
+                .build();
+    }
+
+    public MultipartImageFileDto getPlayerTorsoMultipartDto() {
+        return MultipartImageFileDto.builder()
+                .srcPathOfImage(CommonConstant.PLAYER_IMAGE_PATH_PREFIX)
+                .file(this.image.get(1))
+                .additionalName(this.firstNameEng + "_" + CommonConstant.PLAYER_TORSO_IMAGE_PROFILE_POSTFIX)
                 .build();
     }
 }

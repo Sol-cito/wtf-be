@@ -20,4 +20,5 @@ public class PlayerDto {
     private String moto;
     private String curYn;
     private String profileImgSrc;
+    private String profileTorsoImgSrc;
 }

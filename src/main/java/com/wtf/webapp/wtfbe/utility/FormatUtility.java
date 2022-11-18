@@ -2,10 +2,23 @@ package com.wtf.webapp.wtfbe.utility;
 
 import lombok.experimental.UtilityClass;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 @UtilityClass
 public class FormatUtility {
+
+    public String getTodayDateWithTimeAsString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return sdf.format(new Date(System.currentTimeMillis()));
+    }
+
+    public String getTodayDateAsString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        return sdf.format(new Date(System.currentTimeMillis()));
+    }
+
     public String stringToJson(String target) {
         target = target.replace("\"", "");
         HashMap<String, String> urlMap = new HashMap<>() {{
@@ -57,5 +70,15 @@ public class FormatUtility {
             sb.append(res.charAt(i));
         }
         return sb.toString();
+    }
+
+    public String getFileExtension(String fullFileName) {
+        StringBuilder sb = new StringBuilder();
+        int pointer = fullFileName.length() - 1;
+        while (fullFileName.charAt(pointer) != '.') {
+            sb.append(fullFileName.charAt(pointer));
+            pointer--;
+        }
+        return sb.reverse().toString();
     }
 }

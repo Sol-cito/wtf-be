@@ -40,6 +40,9 @@ public class PlayerEntity {
     @Setter
     private String profileImgSrc;
 
+    @Setter
+    private String profileTorsoImgSrc;
+
     public PlayerDto convertToDto() {
         return PlayerDto.builder()
                 .id(this.id)
@@ -52,6 +55,7 @@ public class PlayerEntity {
                 .moto(this.moto)
                 .curYn(this.curYn)
                 .profileImgSrc(this.profileImgSrc)
+                .profileTorsoImgSrc(this.profileTorsoImgSrc)
                 .build();
     }
 
