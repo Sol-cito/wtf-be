@@ -30,6 +30,10 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
 }
 
 jar {
