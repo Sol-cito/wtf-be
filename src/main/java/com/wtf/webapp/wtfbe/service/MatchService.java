@@ -28,7 +28,8 @@ public class MatchService {
                 .limit(request.getLimit())
                 .order(request.getOrder())
                 .build();
-        List<MatchResultEntity> matchResultEntityResult = jpqlBuilderService.getJQPLResult(jpqlParamVO);
+
+        List<MatchResultEntity> matchResultEntityResult = jpqlBuilderService.getJQPLResult(jpqlParamVO, MatchResultEntity.class);
         return matchResultEntityResult.stream().map(MatchResultEntity::convertToDto).toList();
     }
 

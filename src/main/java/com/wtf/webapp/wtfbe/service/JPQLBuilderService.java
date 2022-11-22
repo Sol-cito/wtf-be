@@ -4,6 +4,7 @@ import com.wtf.webapp.wtfbe.utility.JPQLBuilder;
 import com.wtf.webapp.wtfbe.vo.JPQLParamVO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class JPQLBuilderService {
 
     private final EntityManager em;
 
-    public List getJQPLResult(JPQLParamVO jpqlParamVO) throws ClassNotFoundException {
+    public <T> List<T> getJQPLResult(JPQLParamVO jpqlParamVO, Class<T> entityClass) throws ClassNotFoundException {
         Map<String, Class> entityFieldTypeMap = this.getTargetEntityFieldTypeMap(jpqlParamVO);
 
         JPQLBuilder builder = JPQLBuilder.builder().jpqlParamVO(jpqlParamVO).entityFieldTypeMap(entityFieldTypeMap).build();
@@ -30,11 +31,11 @@ public class JPQLBuilderService {
         builder.addWhereCondition(entityFieldTypeMap);
         builder.addOrderBy();
 
-        Query query = em.createQuery(builder.getStringQuery());
+        TypedQuery<T> typedQuery = em.createQuery(builder.getStringQuery(), entityClass);
 
-        this.bindParametersOfWhereCondition(query, jpqlParamVO, entityFieldTypeMap);
-        this.setRetrievedNumber(query, jpqlParamVO);
-        return query.getResultList();
+        this.bindParametersOfWhereCondition(typedQuery, jpqlParamVO, entityFieldTypeMap);
+        this.setRetrievedNumber(typedQuery, jpqlParamVO);
+        return typedQuery.getResultList();
     }
 
     private Map<String, Class> getTargetEntityFieldTypeMap(JPQLParamVO jpqlParamVO) throws ClassNotFoundException {
