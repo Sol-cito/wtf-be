@@ -38,7 +38,7 @@ public class MatchResultEntity {
 
     private String shootOutYn;
 
-    private Date matchDate;
+    private String matchDate;
 
     public MatchResultDto convertToDto() {
         return MatchResultDto.builder()

@@ -18,5 +18,5 @@ public class MatchResultDto {
     private int goalsLost;
     private String matchResult;
     private String shootOutYn;
-    private Date matchDate;
+    private String matchDate;
 }
