@@ -1,10 +1,7 @@
 package com.wtf.webapp.wtfbe.controller;
 
 import com.wtf.webapp.wtfbe.annotation.QueryStringArgResolver;
-import com.wtf.webapp.wtfbe.dto.MatchResultDto;
-import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
-import com.wtf.webapp.wtfbe.dto.PlayerDto;
-import com.wtf.webapp.wtfbe.dto.TeamDto;
+import com.wtf.webapp.wtfbe.dto.*;
 import com.wtf.webapp.wtfbe.service.ImageService;
 import com.wtf.webapp.wtfbe.service.MatchService;
 import com.wtf.webapp.wtfbe.service.PlayerService;
@@ -45,7 +42,7 @@ public class GetController {
 
     @GetMapping(path = "/profile")
     public String getCurrentRunningProfile() {
-        return Arrays.asList(env.getActiveProfiles()).stream().findFirst().orElse("");
+        return Arrays.stream(env.getActiveProfiles()).findFirst().orElse("");
     }
 
     @GetMapping(path = "/player")
@@ -73,6 +70,12 @@ public class GetController {
             @QueryStringArgResolver MatchResultRequestDto request) throws ClassNotFoundException {
         return new ResponseEntity<>(matchService.getMatchResult(request), OK);
     }
+
+    @GetMapping(path = "/match-types")
+    public ResponseEntity<List<MatchTypeDto>> getMatchType() {
+        return new ResponseEntity<>(matchService.getMatchTypes(), OK);
+    }
+
 
     @GetMapping(path = "/team")
     public ResponseEntity<List<TeamDto>> getAllTeams() {

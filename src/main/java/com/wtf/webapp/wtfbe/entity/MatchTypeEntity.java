@@ -1,5 +1,6 @@
 package com.wtf.webapp.wtfbe.entity;
 
+import com.wtf.webapp.wtfbe.dto.MatchTypeDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +21,12 @@ public class MatchTypeEntity {
     private String matchTypeName;
 
     private String matchSeason;
+
+    public MatchTypeDto convertIntoMatchTypeDto(){
+        return MatchTypeDto.builder()
+                .id(this.id)
+                .matchTypeName(this.matchTypeName)
+                .matchSeason(this.matchSeason)
+                .build();
+    }
 }
