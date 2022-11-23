@@ -5,18 +5,14 @@ import com.wtf.webapp.wtfbe.entity.MatchTypeEntity;
 import com.wtf.webapp.wtfbe.entity.TeamEntity;
 import lombok.*;
 
-import java.util.Date;
-
 @Builder
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class MatchResultDto {
+public class MatchRegistrationRequestDto {
     private int id;
-
-    private TeamDto opposingTeam;
-
-    private MatchTypeDto matchType;
+    private int opposingTeamId;
+    private int matchTypeId;
     private String matchLocation;
     private int goalsScored;
     private int goalsLost;

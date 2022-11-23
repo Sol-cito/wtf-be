@@ -43,9 +43,8 @@ public class MatchResultEntity {
     public MatchResultDto convertToDto() {
         return MatchResultDto.builder()
                 .id(this.id)
-                .opposingTeamName(this.teamEntity.getName())
-                .opposingTeamLogoSrc(this.teamEntity.getTeamLogoSrc())
-                .matchTypeName(this.matchTypeEntity.getMatchTypeName())
+                .opposingTeam(this.teamEntity.convertToTeamDto())
+                .matchType(this.matchTypeEntity.convertIntoMatchTypeDto())
                 .matchLocation(this.matchLocation)
                 .goalsScored(this.goalsScored)
                 .goalsLost(this.goalsLost)
