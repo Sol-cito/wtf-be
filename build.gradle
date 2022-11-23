@@ -25,11 +25,15 @@ dependencies {
     implementation 'mysql:mysql-connector-java'
     implementation 'org.flywaydb:flyway-mysql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.apache.tika:tika-core:2.4.1'
+    implementation 'org.apache.tika:tika-core:2.6.0'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 jar {
