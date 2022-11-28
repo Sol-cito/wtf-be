@@ -1,6 +1,7 @@
 package com.wtf.webapp.wtfbe.entity;
 
 import com.wtf.webapp.wtfbe.dto.MatchResultDto;
+import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,5 +53,16 @@ public class MatchResultEntity {
                 .shootOutYn(this.shootOutYn)
                 .matchDate(this.matchDate)
                 .build();
+    }
+
+    public void updateEntity(MatchResultRequestDto dto, TeamEntity teamEntity, MatchTypeEntity matchTypeEntity) {
+        this.teamEntity = teamEntity;
+        this.matchTypeEntity = matchTypeEntity;
+        this.matchLocation = dto.getMatchLocation();
+        this.goalsScored = dto.getGoalsScored();
+        this.goalsLost = dto.getGoalsLost();
+        this.matchResult = dto.getMatchResult();
+        this.shootOutYn = dto.getShootOutYn();
+        this.matchDate = dto.getMatchDate();
     }
 }
