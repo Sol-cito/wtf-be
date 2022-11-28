@@ -67,7 +67,7 @@ public class GetController {
 
     @GetMapping(path = "/match")
     public ResponseEntity<List<MatchResultDto>> getMatchResult(
-            @QueryStringArgResolver MatchResultRequestDto request) throws ClassNotFoundException {
+            @QueryStringArgResolver MatchResultLookUpRequestDto request) throws ClassNotFoundException {
         return new ResponseEntity<>(matchService.getMatchResult(request), OK);
     }
 

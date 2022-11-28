@@ -30,8 +30,8 @@ public class PostController {
     }
 
     @PostMapping(path = "/match")
-    public ResponseEntity<MatchResultDto> registerMatchResult(@RequestBody MatchRegistrationRequestDto request) throws Exception {
-        MatchResultDto result = matchService.registerMatchResult(request);
+    public ResponseEntity<MatchResultDto> handleMatchResult(@RequestBody MatchResultRequestDto request) {
+        MatchResultDto result = matchService.handleMatchResult(request);
         return new ResponseEntity<>(result, OK);
     }
 }
