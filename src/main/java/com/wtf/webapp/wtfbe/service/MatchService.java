@@ -25,7 +25,7 @@ public class MatchService {
 
     private final String MATCH_ENTITY_NAME = "com.wtf.webapp.wtfbe.entity.MatchResultEntity";
 
-    public List<MatchResultDto> getMatchResult(MatchResultRequestDto request) throws ClassNotFoundException {
+    public List<MatchResultDto> getMatchResult(MatchResultLookUpRequestDto request) throws ClassNotFoundException {
         JPQLParamVO jpqlParamVO = JPQLParamVO.builder().entityName(MATCH_ENTITY_NAME).startIdx(request.getStartIdx()).limit(request.getLimit()).order(request.getOrder()).build();
 
         List<MatchResultEntity> matchResultEntityResult = jpqlBuilderService.getJQPLResult(jpqlParamVO, MatchResultEntity.class);
@@ -36,7 +36,7 @@ public class MatchService {
         return matchTypeRepository.findAll().stream().map(MatchTypeEntity::convertIntoMatchTypeDto).collect(Collectors.toList());
     }
 
-    public MatchResultDto registerMatchResult(MatchRegistrationRequestDto request) {
+    public MatchResultDto handleMatchResult(MatchResultRequestDto request) {
         TeamEntity teamEntity = teamRepository.findById(request.getOpposingTeamId()).orElseThrow(() -> {
             // TO-DO : switch to more accurate exception
             throw new RuntimeException("Team entity not found for match registration");
@@ -45,7 +45,8 @@ public class MatchService {
             // TO-DO : switch to more accurate exception
             throw new RuntimeException("Match type entity not found for match registration");
         });
-        MatchResultEntity entity = MatchResultEntity.builder()
+        MatchResultEntity entity = matchResultRepository.findById(request.getId()).orElse(
+                MatchResultEntity.builder()
                 .teamEntity(teamEntity)
                 .matchTypeEntity(matchTypeEntity)
                 .matchLocation(request.getMatchLocation())
@@ -54,7 +55,7 @@ public class MatchService {
                 .matchResult(request.getMatchResult())
                 .shootOutYn(request.getShootOutYn())
                 .matchDate(request.getMatchDate())
-                .build();
+                .build());
         return matchResultRepository.save(entity).convertToDto();
     }
 }
