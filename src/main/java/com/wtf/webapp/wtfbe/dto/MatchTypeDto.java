@@ -11,5 +11,4 @@ import java.util.Date;
 public class MatchTypeDto {
     private int id;
     private String matchTypeName;
-    private String matchSeason;
 }

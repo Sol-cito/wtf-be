@@ -10,8 +10,10 @@ import com.wtf.webapp.wtfbe.repository.TeamRepository;
 import com.wtf.webapp.wtfbe.vo.JPQLParamVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +38,7 @@ public class MatchService {
         return matchTypeRepository.findAll().stream().map(MatchTypeEntity::convertIntoMatchTypeDto).collect(Collectors.toList());
     }
 
+    @Transactional
     public MatchResultDto handleMatchResult(MatchResultRequestDto request) {
         TeamEntity teamEntity = teamRepository.findById(request.getOpposingTeamId()).orElseThrow(() -> {
             // TO-DO : switch to more accurate exception
@@ -45,17 +48,8 @@ public class MatchService {
             // TO-DO : switch to more accurate exception
             throw new RuntimeException("Match type entity not found for match registration");
         });
-        MatchResultEntity entity = matchResultRepository.findById(request.getId()).orElse(
-                MatchResultEntity.builder()
-                .teamEntity(teamEntity)
-                .matchTypeEntity(matchTypeEntity)
-                .matchLocation(request.getMatchLocation())
-                .goalsScored(request.getGoalsScored())
-                .goalsLost(request.getGoalsLost())
-                .matchResult(request.getMatchResult())
-                .shootOutYn(request.getShootOutYn())
-                .matchDate(request.getMatchDate())
-                .build());
+        MatchResultEntity entity = matchResultRepository.findById(request.getId()).orElseGet(() -> MatchResultEntity.builder().build());
+        entity.updateEntity(request, teamEntity, matchTypeEntity);
         return matchResultRepository.save(entity).convertToDto();
     }
 }

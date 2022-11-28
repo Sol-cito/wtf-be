@@ -30,7 +30,7 @@ public class PostController {
     }
 
     @PostMapping(path = "/match")
-    public ResponseEntity<MatchResultDto> handleMatchResult(@RequestBody MatchResultRequestDto request) {
+    public ResponseEntity<MatchResultDto> registerMatchResult(@RequestBody MatchResultRequestDto request) {
         MatchResultDto result = matchService.handleMatchResult(request);
         return new ResponseEntity<>(result, OK);
     }

@@ -20,13 +20,10 @@ public class MatchTypeEntity {
 
     private String matchTypeName;
 
-    private String matchSeason;
-
     public MatchTypeDto convertIntoMatchTypeDto(){
         return MatchTypeDto.builder()
                 .id(this.id)
                 .matchTypeName(this.matchTypeName)
-                .matchSeason(this.matchSeason)
                 .build();
     }
 }
