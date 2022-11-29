@@ -2,10 +2,7 @@ package com.wtf.webapp.wtfbe.controller;
 
 import com.wtf.webapp.wtfbe.annotation.QueryStringArgResolver;
 import com.wtf.webapp.wtfbe.dto.*;
-import com.wtf.webapp.wtfbe.service.ImageService;
-import com.wtf.webapp.wtfbe.service.MatchService;
-import com.wtf.webapp.wtfbe.service.PlayerService;
-import com.wtf.webapp.wtfbe.service.TeamService;
+import com.wtf.webapp.wtfbe.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
@@ -29,6 +26,7 @@ public class GetController {
     private final TeamService teamService;
 
     private final ImageService imageService;
+
 
     @GetMapping(path = "/health")
     public ResponseEntity<String> checkHealth() {
@@ -76,9 +74,13 @@ public class GetController {
         return new ResponseEntity<>(matchService.getMatchTypes(), OK);
     }
 
-
     @GetMapping(path = "/team")
     public ResponseEntity<List<TeamDto>> getAllTeams() {
         return new ResponseEntity<>(teamService.getAllTeams(), OK);
+    }
+
+    @GetMapping(path = "/team-history")
+    public ResponseEntity<List<TeamHistoryDto>> getAllTeamHistory() {
+        return new ResponseEntity<>(teamService.getAllTeamHistory(), OK);
     }
 }
