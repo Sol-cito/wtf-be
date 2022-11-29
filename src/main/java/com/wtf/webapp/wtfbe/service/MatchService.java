@@ -1,6 +1,9 @@
 package com.wtf.webapp.wtfbe.service;
 
-import com.wtf.webapp.wtfbe.dto.*;
+import com.wtf.webapp.wtfbe.dto.MatchResultDto;
+import com.wtf.webapp.wtfbe.dto.MatchResultLookUpRequestDto;
+import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
+import com.wtf.webapp.wtfbe.dto.MatchTypeDto;
 import com.wtf.webapp.wtfbe.entity.MatchResultEntity;
 import com.wtf.webapp.wtfbe.entity.MatchTypeEntity;
 import com.wtf.webapp.wtfbe.entity.TeamEntity;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,5 +53,9 @@ public class MatchService {
         MatchResultEntity entity = matchResultRepository.findById(request.getId()).orElseGet(() -> MatchResultEntity.builder().build());
         entity.updateEntity(request, teamEntity, matchTypeEntity);
         return matchResultRepository.save(entity).convertToDto();
+    }
+
+    public void deleteMatchResult(int matchResultId) {
+        matchResultRepository.deleteById(matchResultId);
     }
 }
