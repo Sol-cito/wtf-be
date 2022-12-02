@@ -24,7 +24,7 @@ public class GetController {
     private final PlayerService playerService;
     private final MatchService matchService;
     private final TeamService teamService;
-
+    private final BoardMemberService boardMemberService;
     private final ImageService imageService;
 
 
@@ -82,5 +82,10 @@ public class GetController {
     @GetMapping(path = "/team-history")
     public ResponseEntity<List<TeamHistoryDto>> getAllTeamHistory() {
         return new ResponseEntity<>(teamService.getAllTeamHistory(), OK);
+    }
+
+    @GetMapping(path = "/board-member")
+    public ResponseEntity<List<BoardMemberDto>> getAllBoardMember() {
+        return new ResponseEntity<>(boardMemberService.getAllBoardMember(), OK);
     }
 }
