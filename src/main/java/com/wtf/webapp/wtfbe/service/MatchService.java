@@ -6,13 +6,13 @@ import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
 import com.wtf.webapp.wtfbe.dto.MatchTypeDto;
 import com.wtf.webapp.wtfbe.entity.MatchResultEntity;
 import com.wtf.webapp.wtfbe.entity.MatchTypeEntity;
-import com.wtf.webapp.wtfbe.entity.ScoreEntity;
 import com.wtf.webapp.wtfbe.entity.TeamEntity;
 import com.wtf.webapp.wtfbe.repository.MatchResultRepository;
 import com.wtf.webapp.wtfbe.repository.MatchTypeRepository;
 import com.wtf.webapp.wtfbe.repository.ScoreRepository;
 import com.wtf.webapp.wtfbe.repository.TeamRepository;
 import com.wtf.webapp.wtfbe.vo.JPQLParamVO;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,14 +43,12 @@ public class MatchService {
     }
 
     @Transactional
-    public MatchResultDto handleMatchResult(MatchResultRequestDto request) {
+    public MatchResultDto handleMatchResult(MatchResultRequestDto request) throws EntityNotFoundException {
         TeamEntity teamEntity = teamRepository.findById(request.getOpposingTeamId()).orElseThrow(() -> {
-            // TO-DO : switch to more accurate exception
-            throw new RuntimeException("Team entity not found for match registration");
+            throw new EntityNotFoundException("Team entity not found for match registration");
         });
         MatchTypeEntity matchTypeEntity = matchTypeRepository.findById(request.getMatchTypeId()).orElseThrow(() -> {
-            // TO-DO : switch to more accurate exception
-            throw new RuntimeException("Match type entity not found for match registration");
+            throw new EntityNotFoundException("Match type entity not found for match registration");
         });
         MatchResultEntity entity = matchResultRepository.findById(request.getId()).orElseGet(() -> MatchResultEntity.builder().build());
         entity.updateEntity(request, teamEntity, matchTypeEntity);
@@ -58,9 +56,9 @@ public class MatchService {
     }
 
     @Transactional
-    public void deleteMatchResult(int matchResultId) {
+    public void deleteMatchResult(int matchResultId) throws EntityNotFoundException {
         MatchResultEntity matchResultEntity = matchResultRepository.findById(matchResultId).orElseThrow(() -> {
-            throw new RuntimeException("Match result entity not found for match deletion");
+            throw new EntityNotFoundException("Match result entity not found for match deletion");
         });
         scoreRepository.deleteAll(scoreRepository.findByMatchResultEntity(matchResultEntity));
         matchResultRepository.delete(matchResultEntity);

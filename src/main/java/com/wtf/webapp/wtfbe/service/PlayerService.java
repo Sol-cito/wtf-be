@@ -5,6 +5,7 @@ import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +55,7 @@ public class PlayerService {
 
     @Transactional
     public PlayerEntity modifyPlayer(PlayerMultipartDto playerMultipartDto) throws Exception {
-        PlayerEntity playerEntity = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(Exception::new);
+        PlayerEntity playerEntity = playerRepository.findById(Integer.parseInt(playerMultipartDto.getId())).orElseThrow(EntityNotFoundException::new);
         if (playerMultipartDto.getImage() != null) {
             if (playerMultipartDto.isPlayerProfileImageNotEmpty()) {
                 MultipartImageFileDto playerProfileMultipartDto = playerMultipartDto.getPlayerProfileMultipartDto();
