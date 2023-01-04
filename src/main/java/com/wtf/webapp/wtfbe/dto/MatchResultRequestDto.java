@@ -12,6 +12,7 @@ public class MatchResultRequestDto {
     private int matchTypeId;
     private String matchLocation;
     private int goalsScored;
+    private ScorerAndAssisterDto[] scorersAndAssisters;
     private int goalsLost;
     private String matchResult;
     private String shootOutYn;

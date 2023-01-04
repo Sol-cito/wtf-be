@@ -1,22 +1,17 @@
 package com.wtf.webapp.wtfbe.service;
 
-import com.wtf.webapp.wtfbe.dto.MatchResultDto;
-import com.wtf.webapp.wtfbe.dto.MatchResultLookUpRequestDto;
-import com.wtf.webapp.wtfbe.dto.MatchResultRequestDto;
-import com.wtf.webapp.wtfbe.dto.MatchTypeDto;
+import com.wtf.webapp.wtfbe.dto.*;
 import com.wtf.webapp.wtfbe.entity.MatchResultEntity;
 import com.wtf.webapp.wtfbe.entity.MatchTypeEntity;
 import com.wtf.webapp.wtfbe.entity.TeamEntity;
-import com.wtf.webapp.wtfbe.repository.MatchResultRepository;
-import com.wtf.webapp.wtfbe.repository.MatchTypeRepository;
-import com.wtf.webapp.wtfbe.repository.ScoreRepository;
-import com.wtf.webapp.wtfbe.repository.TeamRepository;
+import com.wtf.webapp.wtfbe.repository.*;
 import com.wtf.webapp.wtfbe.vo.JPQLParamVO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +23,7 @@ public class MatchService {
     private final MatchTypeRepository matchTypeRepository;
     private final TeamRepository teamRepository;
     private final ScoreRepository scoreRepository;
+    private final AssistRepository assistRepository;
 
     private final String MATCH_ENTITY_NAME = "com.wtf.webapp.wtfbe.entity.MatchResultEntity";
 
@@ -62,5 +58,11 @@ public class MatchService {
         });
         scoreRepository.deleteAll(scoreRepository.findByMatchResultEntity(matchResultEntity));
         matchResultRepository.delete(matchResultEntity);
+    }
+
+    public void handleScorerAndAssister(int matchResultId, ScorerAndAssisterDto[] scorersAndAssisters) {
+        Arrays.stream(scorersAndAssisters).forEach(ele -> {
+
+        });
     }
 }

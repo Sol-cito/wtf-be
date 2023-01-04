@@ -23,5 +23,5 @@ public class ScoreEntity {
     @JoinColumn(name = "match_result_id")
     private MatchResultEntity matchResultEntity;
 
-    private String goalKind;
+    private String goalType;
 }
