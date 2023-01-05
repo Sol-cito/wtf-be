@@ -11,12 +11,4 @@ public class ScorerAndAssisterDto {
     private int scorerId;
     private String goalType;
     private int assisterId;
-
-    public boolean isScorerNotUnknown() {
-        return scorerId == -1;
-    }
-
-    public boolean isAssisterNotUnknown() {
-        return scorerId == -1;
-    }
 }
