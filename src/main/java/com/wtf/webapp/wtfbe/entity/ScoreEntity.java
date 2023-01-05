@@ -15,13 +15,13 @@ public class ScoreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(targetEntity = PlayerEntity.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_id")
-    private PlayerEntity playerEntity;
-
     @OneToOne
     @JoinColumn(name = "match_result_id")
     private MatchResultEntity matchResultEntity;
+
+    @ManyToOne(targetEntity = PlayerEntity.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_id")
+    private PlayerEntity playerEntity;
 
     private String goalType;
 }
