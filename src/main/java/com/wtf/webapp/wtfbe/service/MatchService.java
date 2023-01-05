@@ -32,9 +32,15 @@ public class MatchService {
 
     public List<MatchResultDto> getMatchResult(MatchResultLookUpRequestDto request) throws ClassNotFoundException {
         JPQLParamVO jpqlParamVO = JPQLParamVO.builder().entityName(MATCH_ENTITY_NAME).startIdx(request.getStartIdx()).limit(request.getLimit()).order(request.getOrder()).build();
-
         List<MatchResultEntity> matchResultEntityResult = jpqlBuilderService.getJQPLResult(jpqlParamVO, MatchResultEntity.class);
-        return matchResultEntityResult.stream().map(MatchResultEntity::convertToDto).toList();
+
+        return matchResultEntityResult.stream().map(matchResultEntity -> {
+            MatchResultDto matchResultDto = matchResultEntity.convertToDto();
+            List<ScoreEntity> scoreEntityList = scoreRepository.findByMatchResultEntity(matchResultEntity);
+            List<AssistEntity> assistEntityList = assistRepository.findByMatchResultEntity(matchResultEntity);
+            matchResultDto.setScorerAndAssisterDtosByEntities(scoreEntityList, assistEntityList);
+            return matchResultDto;
+        }).collect(Collectors.toList());
     }
 
     public List<MatchTypeDto> getMatchTypes() {
@@ -58,18 +64,10 @@ public class MatchService {
 
         Arrays.stream(request.getScorersAndAssisters()).forEach(ele -> {
             PlayerEntity scorerEntity = playerRepository.findById(ele.getScorerId()).orElse(null);
-            ScoreEntity scoreEntity = ScoreEntity.builder()
-                    .matchResultEntity(matchResultEntity)
-                    .playerEntity(scorerEntity)
-                    .goalType(ele.getGoalType())
-                    .build();
+            ScoreEntity scoreEntity = ScoreEntity.builder().matchResultEntity(matchResultEntity).playerEntity(scorerEntity).goalType(ele.getGoalType()).build();
             scoreRepository.save(scoreEntity);
             PlayerEntity assisterEntity = playerRepository.findById(ele.getAssisterId()).orElse(null);
-            AssistEntity assistEntity = AssistEntity.builder()
-                    .matchResultEntity(matchResultEntity)
-                    .scoreEntity(scoreEntity)
-                    .playerEntity(assisterEntity)
-                    .build();
+            AssistEntity assistEntity = AssistEntity.builder().matchResultEntity(matchResultEntity).scoreEntity(scoreEntity).playerEntity(assisterEntity).build();
             assistRepository.save(assistEntity);
         });
         return saveResultMathcReusltEntity.convertToDto();
