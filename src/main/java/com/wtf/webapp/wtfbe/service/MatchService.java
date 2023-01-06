@@ -78,6 +78,7 @@ public class MatchService {
         MatchResultEntity matchResultEntity = matchResultRepository.findById(matchResultId).orElseThrow(() -> {
             throw new EntityNotFoundException("Match result entity not found for match deletion");
         });
+        assistRepository.deleteAll(assistRepository.findByMatchResultEntity(matchResultEntity));
         scoreRepository.deleteAll(scoreRepository.findByMatchResultEntity(matchResultEntity));
         matchResultRepository.delete(matchResultEntity);
     }
