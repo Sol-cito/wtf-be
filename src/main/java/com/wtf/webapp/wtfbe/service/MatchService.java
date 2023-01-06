@@ -57,10 +57,10 @@ public class MatchService {
         });
         MatchResultEntity matchResultEntity = matchResultRepository.findById(request.getId()).orElseGet(() -> MatchResultEntity.builder().build());
         matchResultEntity.updateEntity(request, teamEntity, matchTypeEntity);
-        MatchResultEntity saveResultMathcReusltEntity = matchResultRepository.save(matchResultEntity);
+        MatchResultEntity finalResultOfMatchResultEntity = matchResultRepository.save(matchResultEntity);
 
-        scoreRepository.deleteAll(scoreRepository.findByMatchResultEntity(matchResultEntity));
         assistRepository.deleteAll(assistRepository.findByMatchResultEntity(matchResultEntity));
+        scoreRepository.deleteAll(scoreRepository.findByMatchResultEntity(matchResultEntity));
 
         Arrays.stream(request.getScorersAndAssisters()).forEach(ele -> {
             PlayerEntity scorerEntity = playerRepository.findById(ele.getScorerId()).orElse(null);
@@ -70,7 +70,7 @@ public class MatchService {
             AssistEntity assistEntity = AssistEntity.builder().matchResultEntity(matchResultEntity).scoreEntity(scoreEntity).playerEntity(assisterEntity).build();
             assistRepository.save(assistEntity);
         });
-        return saveResultMathcReusltEntity.convertToDto();
+        return finalResultOfMatchResultEntity.convertToDto();
     }
 
     @Transactional
