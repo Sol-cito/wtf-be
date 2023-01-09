@@ -43,7 +43,7 @@ pipeline {
             steps {
                 echo "Kill Previous Instance Process by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash killPreviousProcess.sh'
+                    sh 'bash killPreviousProcess.sh ${PROFILE}'
                 }
             }
         }

@@ -1,37 +1,13 @@
-function find_idle_service_name() {
-  CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
+# set properties by PROFILE variable
+source ./properties.sh "${1}"
 
-  if [ "${CUR_PROFILE}" == "blue" ]; then
-    echo "green"
-  else
-    echo "blue"
-  fi
-}
-
-function find_idle_port() {
-  CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
-
-  if [ "${CUR_PROFILE}" == "blue" ]; then
-    echo "${4}"
-  else
-    echo "${3}"
-  fi
-}
-
-echo "Parameter : $1"
-
-# Variables
-ADDRESS="localhost"
-
-PORT=83 # NGINX local PORT
-
-BLUE_PORT=8095
-GREEN_PORT=8096
+# import functions
+source ./functions.sh
 
 # check idle profile and port
-IDLE_PROFILE=$(find_idle_service_name $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
+IDLE_PROFILE=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
 
-IDLE_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
+IDLE_PORT=$(find_idle_port "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
 
 echo "> idle profile : ${IDLE_PROFILE}"
 echo "> idle port : ${IDLE_PORT}"
@@ -51,8 +27,8 @@ else
 fi
 
 # create .jar
-JENKINS_WORKSPACE=/var/lib/jenkins/jobs/wtf-be-dev/workspace
-REPOSITORY=/home/sol/project/wtf-be-dev/$IDLE_PROFILE
+JENKINS_WORKSPACE=/var/lib/jenkins/jobs/wtf-be-"${PROFILE}"/workspace
+REPOSITORY=/home/sol/project/wtf-be-"${PROFILE}"/$IDLE_PROFILE
 
 cd "${JENKINS_WORKSPACE}"
 sudo chmod +x gradlew

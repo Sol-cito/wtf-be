@@ -1,20 +1,8 @@
-function find_idle_port() {
-  CUR_PROFILE=$(curl -s "http://${1}:${2}/profile")
+# set properties by PROFILE variable
+source ./properties.sh "${1}"
 
-  if [ "${CUR_PROFILE}" == "blue" ]; then
-    echo "${4}"
-  else
-    echo "${3}"
-  fi
-}
-
-# Variables
-ADDRESS="localhost"
-
-PORT=83 # NGINX local PORT
-
-BLUE_PORT=8095
-GREEN_PORT=8096
+# import functions
+source ./functions.sh
 
 # kill previous process
 PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
