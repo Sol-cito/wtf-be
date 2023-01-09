@@ -1,3 +1,5 @@
+env.environment
+
 pipeline {
     agent any
 
