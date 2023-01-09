@@ -7,9 +7,8 @@ pipeline {
         stage('Set Environment variables') {
             steps {
                 script {
-                    if(env.BRANCH_NAME == 'develop') {
-                        env.environment = 'dev'
-                    }
+                    echo "Current Branch Name is ${env.BRANCH_NAME}"
+                    env.environment = 'dev'
                     if(env.BRANCH_NAME == 'prod') {
                         env.environment = 'prod'
                     }
