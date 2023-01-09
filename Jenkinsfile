@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Set Environment variables') {
+        stage('Check parameterized Profile') {
             steps {
                 script {
                     echo "Current profile is ${PROFILE}"
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo "Build start by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash build.sh'
+                    sh 'bash build.sh ${PROFILE}'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "Health check start by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash healthCheck.sh'
+                    sh 'bash healthCheck.sh ${PROFILE}'
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 echo "Switching by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash portSwitch.sh'
+                    sh 'bash portSwitch.sh ${PROFILE}'
                 }
             }
         }

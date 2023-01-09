@@ -18,6 +18,7 @@ function find_idle_port() {
   fi
 }
 
+echo "Parameter : $1"
 
 # Variables
 ADDRESS="localhost"
