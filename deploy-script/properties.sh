@@ -7,9 +7,9 @@ if [ "${PROFILE}" == "dev" ]; then
   export GREEN_PORT=8096
 elif [ "${PROFILE}" == "prod" ]; then
   export ADDRESS="localhost"
-  export PORT=100 # NGINX local PORT
-  export BLUE_PORT=100
-  export GREEN_PORT=100
+  export PORT=84 # NGINX local PORT
+  export BLUE_PORT=8097
+  export GREEN_PORT=8098
 fi
 
 echo "> Properties / PROFILE = ${PROFILE}"
