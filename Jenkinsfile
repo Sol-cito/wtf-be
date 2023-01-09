@@ -1,5 +1,3 @@
-env.environment
-
 pipeline {
     agent any
 
@@ -7,10 +5,10 @@ pipeline {
         stage('Set Environment variables') {
             steps {
                 script {
-                    if(BRANCH_NAME == 'develop') {
+                    if(env.BRANCH_NAME == 'develop') {
                         env.environment = 'dev'
                     }
-                    if(BRANCH_NAME == 'prod') {
+                    if(env.BRANCH_NAME == 'prod') {
                         env.environment = 'prod'
                     }
                     echo "Current build/deploy environment is ${env.environment}"
