@@ -16,7 +16,7 @@ import java.util.Date;
 @Getter
 @Builder
 @Table(name = "email_receiver")
-public class EmailReceiverEntity {
+public class EmailReceiverEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,6 +24,4 @@ public class EmailReceiverEntity {
     private String email;
 
     private String who;
-
-    private Date regiDate;
 }

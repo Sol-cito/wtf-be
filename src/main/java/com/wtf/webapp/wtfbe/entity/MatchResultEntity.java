@@ -16,7 +16,7 @@ import java.util.Date;
 @Getter
 @Builder
 @Table(name = "match_result")
-public class MatchResultEntity {
+public class MatchResultEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

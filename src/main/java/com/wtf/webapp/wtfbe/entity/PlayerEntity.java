@@ -16,7 +16,7 @@ import java.util.Date;
 @Getter
 @Builder
 @Table(name = "player")
-public class PlayerEntity {
+public class PlayerEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
