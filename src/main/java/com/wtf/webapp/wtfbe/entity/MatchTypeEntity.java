@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Table(name = "match_type")
-public class MatchTypeEntity {
+public class MatchTypeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String matchTypeName;
 
-    public MatchTypeDto convertIntoMatchTypeDto(){
+    public MatchTypeDto convertIntoMatchTypeDto() {
         return MatchTypeDto.builder()
                 .id(this.id)
                 .matchTypeName(this.matchTypeName)

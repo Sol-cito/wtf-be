@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Builder
 @Table(name = "team_history")
-public class TeamHistoryEntity {
+public class TeamHistoryEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -21,12 +21,7 @@ public class TeamHistoryEntity {
 
     private String history;
 
-    private Date regiDate;
-
-    @Setter
-    private Date modiDate;
-
-    public TeamHistoryDto convertToDto(){
+    public TeamHistoryDto convertToDto() {
         return TeamHistoryDto.builder()
                 .id(this.id)
                 .year(this.year)

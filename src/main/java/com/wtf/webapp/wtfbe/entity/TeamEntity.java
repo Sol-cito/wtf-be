@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Builder
 @Table(name = "team")
-public class TeamEntity {
+public class TeamEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
