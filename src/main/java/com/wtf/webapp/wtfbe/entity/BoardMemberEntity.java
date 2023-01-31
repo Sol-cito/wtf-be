@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Builder
 @Table(name = "board_member")
-public class BoardMemberEntity {
+public class BoardMemberEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,7 +27,7 @@ public class BoardMemberEntity {
 
     private Date assignedDate;
 
-    public BoardMemberDto converToDto(){
+    public BoardMemberDto converToDto() {
         return BoardMemberDto.builder()
                 .id(this.id)
                 .player(this.playerEntity.convertToDto())
