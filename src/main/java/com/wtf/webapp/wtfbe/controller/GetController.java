@@ -63,6 +63,11 @@ public class GetController {
         return new ResponseEntity<>(playerService.getPlayerByPosition(position), OK);
     }
 
+    @GetMapping(path = "/player-stat", params = "id")
+    public ResponseEntity<PlayerStatDto> getPlayerStatById(@RequestParam(value = "id") int id) throws Exception {
+        return new ResponseEntity<>(playerService.getPlayerStatById(id), OK);
+    }
+
     @GetMapping(path = "/match")
     public ResponseEntity<List<MatchResultDto>> getMatchResult(
             @QueryStringArgResolver MatchResultLookUpRequestDto request) throws ClassNotFoundException {

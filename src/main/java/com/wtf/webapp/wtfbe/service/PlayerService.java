@@ -3,8 +3,12 @@ package com.wtf.webapp.wtfbe.service;
 import com.wtf.webapp.wtfbe.dto.MultipartImageFileDto;
 import com.wtf.webapp.wtfbe.dto.PlayerDto;
 import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
+import com.wtf.webapp.wtfbe.dto.PlayerStatDto;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
+import com.wtf.webapp.wtfbe.entity.ScoreEntity;
+import com.wtf.webapp.wtfbe.repository.AssistRepository;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
+import com.wtf.webapp.wtfbe.repository.ScoreRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,8 @@ import java.util.List;
 public class PlayerService {
     private final UtilService utilService;
     private final PlayerRepository playerRepository;
+    private final ScoreRepository scoreRepository;
+    private final AssistRepository assistRepository;
 
     public List<PlayerDto> getAllPlayers() {
         return playerRepository.findAll().stream().map(PlayerEntity::convertToDto).toList();
@@ -74,5 +80,19 @@ public class PlayerService {
         }
         playerEntity.setAllFieldByPlayerMultipartDto(playerMultipartDto);
         return playerRepository.save(playerEntity);
+    }
+
+    public PlayerStatDto getPlayerStatById(int id) throws EntityNotFoundException {
+        PlayerEntity playerEntity = playerRepository.findById(id).orElseThrow(() -> {
+            throw new EntityNotFoundException("Player entity not found for getting player stat");
+        });
+
+        int scores = scoreRepository.findByPlayerEntity(playerEntity).size();
+        int assists = assistRepository.findByPlayerEntity(playerEntity).size();
+
+        return PlayerStatDto.builder()
+                .scores(scores)
+                .assists(assists)
+                .build();
     }
 }
