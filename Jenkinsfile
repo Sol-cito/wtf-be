@@ -30,8 +30,8 @@ pipeline {
                 echo "temp"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
                     sh 'source ./initProperties.sh'
-                    IDLE_SERVICE_NAME = "${IDLE_SERVICE_NAME}"
                 }
+                IDLE_SERVICE_NAME = "${IDLE_SERVICE_NAME}"
                 echo "temp result : ${IDLE_SERVICE_NAME}"
             }
         }
