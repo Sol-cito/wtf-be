@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        staget('Temp'){
+        stage('Temp'){
             steps {
                 echo "temp"
                 script {
