@@ -1,6 +1,3 @@
-# set properties by PROFILE variable
-source ./properties.sh "${1}"
-
 echo "> idle port : ${IDLE_PORT}"
 
 for retry_count in {1..10}

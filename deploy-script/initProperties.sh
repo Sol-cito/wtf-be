@@ -1,29 +1,27 @@
-PROFILE=$1
-
 # import functions
 source ./functions.sh
 
 if [ "${PROFILE}" == "dev" ]; then
-  export ADDRESS="localhost"
-  export PORT=84 # NGINX local PORT
-  export BLUE_PORT=8095
-  export GREEN_PORT=8096
+  ADDRESS="localhost"
+  PORT=84 # NGINX local PORT
+  BLUE_PORT=8095
+  GREEN_PORT=8096
 elif [ "${PROFILE}" == "prod" ]; then
-  export ADDRESS="localhost"
-  export PORT=85 # NGINX local PORT
-  export BLUE_PORT=8097
-  export GREEN_PORT=8098
+  ADDRESS="localhost"
+  PORT=85 # NGINX local PORT
+  BLUE_PORT=8097
+  GREEN_PORT=8098
 fi
 
 export IDLE_SERVICE_NAME=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
 if [ "${IDLE_SERVICE_NAME}" == "blue" ]; then
-  export IDLE_PORT=${GREEN_PORT}
-  export CURRENT_SERVICE_NAME="green"
-  export CURRENT_PORT=${BLUE_PORT}
+  IDLE_PORT=${BLUE_PORT}
+  CURRENT_SERVICE_NAME="green"
+  CURRENT_PORT=${GREEN_PORT}
 else
-  export IDLE_PORT=${BLUE_PORT}
-  export CURRENT_SERVICE_NAME="blue"
-  export CURRENT_PORT=${GREEN_PORT}
+  IDLE_PORT=${GREEN_PORT}
+  CURRENT_SERVICE_NAME="blue"
+  CURRENT_PORT=${BLUE_PORT}
 fi
 
 echo "> Properties / PROFILE = ${PROFILE}"

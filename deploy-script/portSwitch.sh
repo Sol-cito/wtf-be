@@ -1,6 +1,3 @@
-# set properties by PROFILE variable
-source ./properties.sh "${1}"
-
 # switch NGINX
 echo "> Port switch"
 

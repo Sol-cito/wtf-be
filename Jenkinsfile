@@ -1,3 +1,13 @@
+def PROFILE
+def ADDRESS
+def PORT
+def BLUE_PORT
+def GREEN_PORT
+def IDLE_SERVICE_NAME
+def IDLE_PORT
+def CURRENT_SERVICE_NAME
+def CURRENT_PORT
+
 pipeline {
     agent any
 
@@ -5,6 +15,7 @@ pipeline {
         stage('Check parameterized Profile') {
             steps {
                 script {
+                    PROFILE = ${PROFILE}
                     echo "Current profile is ${PROFILE}"
                 }
             }
@@ -15,11 +26,21 @@ pipeline {
                 echo "Hello WTF Jenkins!!!!!"
             }
         }
+
+        stage('Set global variables') {
+            steps {
+                echo "Set global variables by initProperties script"
+                dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
+                    sh 'bash initProperties.sh'
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 echo "Build start by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash build.sh ${PROFILE}'
+                    sh 'bash build.sh'
                 }
             }
         }
@@ -27,7 +48,7 @@ pipeline {
             steps {
                 echo "Health check start by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash healthCheck.sh ${PROFILE}'
+                    sh 'bash healthCheck.sh'
                 }
             }
         }
@@ -35,7 +56,7 @@ pipeline {
             steps {
                 echo "Switching by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash portSwitch.sh ${PROFILE}'
+                    sh 'bash portSwitch.sh'
                 }
             }
         }
@@ -43,7 +64,7 @@ pipeline {
             steps {
                 echo "Kill Previous Instance Process by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash killPreviousProcess.sh ${PROFILE}'
+                    sh 'bash killPreviousProcess.sh'
                 }
             }
         }

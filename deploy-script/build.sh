@@ -1,7 +1,4 @@
-# set properties by PROFILE variable
-source ./properties.sh "${1}"
-
-# check idle profile and port
+# check idle service name and port
 echo "> idle service name : ${IDLE_SERVICE_NAME}"
 echo "> idle port : ${IDLE_PORT}"
 

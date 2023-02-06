@@ -1,6 +1,3 @@
-# set properties by PROFILE variable
-source ./properties.sh "${1}"
-
 # kill previous process
 echo "> Previous port : ${CURRENT_PORT}"
 
