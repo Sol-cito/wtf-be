@@ -6,7 +6,7 @@ if [ "${PROFILE}" == "dev" ]; then
   export BLUE_PORT=8095
   export GREEN_PORT=8096
 elif [ "${PROFILE}" == "prod" ]; then
-  export ADDRESS="localhost"
+  export ADDRESS="https://localhost"
   export PORT=85 # NGINX local PORT
   export BLUE_PORT=8097
   export GREEN_PORT=8098
