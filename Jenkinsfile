@@ -2,7 +2,7 @@ def ADDRESS
 def PORT
 def BLUE_PORT
 def GREEN_PORT
-def IDLE_SERVICE_NAME = 'test'
+def IDLE_SERVICE_NAME
 def IDLE_PORT
 def CURRENT_SERVICE_NAME
 def CURRENT_PORT
@@ -28,6 +28,9 @@ pipeline {
         stage('Temp'){
             steps {
                 echo "temp"
+                script{
+                    IDLE_SERVICE_NAME = 'test'
+                }
                 echo "temp result : ${IDLE_SERVICE_NAME}"
             }
         }
