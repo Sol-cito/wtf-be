@@ -13,15 +13,15 @@ elif [ "${PROFILE}" == "prod" ]; then
   GREEN_PORT=8098
 fi
 
-IDLE_SERVICE_NAME=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
+export IDLE_SERVICE_NAME=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
 if [ "${IDLE_SERVICE_NAME}" == "blue" ]; then
-  IDLE_PORT="${BLUE_PORT}"
-  CURRENT_SERVICE_NAME="green"
-  CURRENT_PORT="${GREEN_PORT}"
+  export IDLE_PORT="${BLUE_PORT}"
+  export CURRENT_SERVICE_NAME="green"
+  export CURRENT_PORT="${GREEN_PORT}"
 else
-  IDLE_PORT="${GREEN_PORT}"
-  CURRENT_SERVICE_NAME="blue"
-  CURRENT_PORT="${BLUE_PORT}"
+  export IDLE_PORT="${GREEN_PORT}"
+  export CURRENT_SERVICE_NAME="blue"
+  export CURRENT_PORT="${BLUE_PORT}"
 fi
 
 echo "> Properties / PROFILE = ${PROFILE}"
