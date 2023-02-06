@@ -9,7 +9,7 @@ echo "> idle port : ${IDLE_PORT}"
 
 for retry_count in {1..10}
 do
-  response=$(curl -s "$HTTP_TYPE"://"$ADDRESS":"$IDLE_PORT"/health)
+  response=$(curl -s -k "$HTTP_TYPE"://"$ADDRESS":"$IDLE_PORT"/health)
   up_count=$(echo "$response" | grep 'Hello WTF!' | wc -l)
 
   if [ "$up_count" -ge 1 ]
