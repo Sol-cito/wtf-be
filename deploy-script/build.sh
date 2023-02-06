@@ -13,17 +13,19 @@ echo "> idle profile : ${IDLE_PROFILE}"
 echo "> idle port : ${IDLE_PORT}"
 
 # check pid and kill process
-echo "> check running app pid on ${IDLE_PORT}"
-IDLE_PID=$(sudo lsof -ti tcp:"${IDLE_PORT}")
+if [ "${IDLE_PROFILE}" != "nothing" ]; then
+  echo "> check running app pid on ${IDLE_PORT}"
+  IDLE_PID=$(sudo lsof -ti tcp:"${IDLE_PORT}")
 
-echo "> IDLE_PID : ${IDLE_PID}"
-if [ -z "${IDLE_PID}" ]
-then
-  echo "> there is no currently running app on ${IDLE_PID}"
-else
-  echo "> kill -15 ${IDLE_PID}"
-  sudo kill -15 "${IDLE_PID}"
-  sleep 10
+  echo "> IDLE_PID : ${IDLE_PID}"
+  if [ -z "${IDLE_PID}" ]
+  then
+    echo "> there is no currently running app on ${IDLE_PID}"
+  else
+    echo "> kill -15 ${IDLE_PID}"
+    sudo kill -15 "${IDLE_PID}"
+    sleep 10
+  fi
 fi
 
 # create .jar
