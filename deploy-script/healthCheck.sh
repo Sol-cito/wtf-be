@@ -7,6 +7,11 @@ source ./functions.sh
 IDLE_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT $HTTP_TYPE)
 echo "> idle port : ${IDLE_PORT}"
 
+if [ "${IDLE_PORT}" == "nothing" ]; then
+    echo "> Health check fail -> IDLE_PORT is Nothing"
+    exit 1
+fi
+
 for retry_count in {1..10}
 do
   response=$(curl -s -k "$HTTP_TYPE"://"$ADDRESS":"$IDLE_PORT"/health)

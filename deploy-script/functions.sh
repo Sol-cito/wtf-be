@@ -3,8 +3,10 @@ function find_idle_service_name() {
 
   if [ "${CUR_PROFILE}" == "blue" ]; then
     echo "green"
-  else
+  elif [ "${CUR_PROFILE}" == "green" ]; then
     echo "blue"
+  else
+    echo "nothing"
   fi
 }
 
@@ -13,7 +15,9 @@ function find_idle_port() {
 
   if [ "${CUR_PROFILE}" == "blue" ]; then
     echo "${4}"
-  else
+  elif [ "${CUR_PROFILE}" == "green" ]; then
     echo "${3}"
+  else
+    echo "nothing"
   fi
 }
