@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo "temp"
                 script {
-                    source "./var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script/initProperties.sh"
+                    bash "/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script/initProperties.sh"
                     IDLE_SERVICE_NAME = "${IDLE_SERVICE_NAME}"
                     echo "temp result : ${IDLE_SERVICE_NAME}"
                 }
