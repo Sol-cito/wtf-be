@@ -28,9 +28,6 @@ pipeline {
         stage('Temp'){
             steps {
                 echo "temp"
-                script {
-                    source ./initProperties.sh
-                }
                 echo "temp result : ${IDLE_SERVICE_NAME}"
             }
         }
