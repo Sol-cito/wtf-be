@@ -1,4 +1,3 @@
-def PROFILE
 def ADDRESS
 def PORT
 def BLUE_PORT
@@ -15,7 +14,6 @@ pipeline {
         stage('Check parameterized Profile') {
             steps {
                 script {
-                    PROFILE = "${PROFILE}"
                     echo "Current profile is ${PROFILE}"
                 }
             }
