@@ -30,7 +30,7 @@ pipeline {
                 echo "temp"
                 script {
                     source ./initProperties.sh
-                    IDLE_SERVICE_NAME = "${IDLE_SERVICE_NAME}".trim()
+                    IDLE_SERVICE_NAME = ${IDLE_SERVICE_NAME}
                 }
                 echo "temp result : ${IDLE_SERVICE_NAME}"
             }
