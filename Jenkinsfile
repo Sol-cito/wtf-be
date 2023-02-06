@@ -1,12 +1,12 @@
-def PROFILE
-def ADDRESS
-def PORT
-def BLUE_PORT
-def GREEN_PORT
-def IDLE_SERVICE_NAME
-def IDLE_PORT
-def CURRENT_SERVICE_NAME
-def CURRENT_PORT
+PROFILE
+ADDRESS
+PORT
+BLUE_PORT
+GREEN_PORT
+IDLE_SERVICE_NAME
+IDLE_PORT
+CURRENT_SERVICE_NAME
+CURRENT_PORT
 
 pipeline {
     agent any
@@ -15,7 +15,7 @@ pipeline {
         stage('Check parameterized Profile') {
             steps {
                 script {
-                    PROFILE = ${PROFILE}
+                    PROFILE = "${PROFILE}"
                     echo "Current profile is ${PROFILE}"
                 }
             }
