@@ -39,6 +39,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Kill Previous Instance Process') {
             steps {
                 echo "Kill Previous Instance Process by shell script"
@@ -47,5 +48,6 @@ pipeline {
                 }
             }
         }
+        */
     }
 }
