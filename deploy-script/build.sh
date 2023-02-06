@@ -5,9 +5,9 @@ source ./properties.sh "${1}"
 source ./functions.sh
 
 # check idle profile and port
-IDLE_PROFILE=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}" "${HTTP_TYPE}")
+IDLE_PROFILE=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
 
-IDLE_PORT=$(find_idle_port "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}" "${HTTP_TYPE}")
+IDLE_PORT=$(find_idle_port "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
 
 echo "> idle profile : ${IDLE_PROFILE}"
 echo "> idle port : ${IDLE_PORT}"
