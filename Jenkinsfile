@@ -35,15 +35,7 @@ pipeline {
             steps {
                 echo "Switching by shell script"
                 dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash portSwitch.sh ${PROFILE}'
-                }
-            }
-        }
-        stage('Kill Previous Instance Process') {
-            steps {
-                echo "Kill Previous Instance Process by shell script"
-                dir("/var/lib/jenkins/jobs/wtf-be-${PROFILE}/workspace/deploy-script") {
-                    sh 'bash killPreviousProcess.sh ${PROFILE}'
+                    sh 'bash portSwitchAndKillPreviousProcess.sh ${PROFILE}'
                 }
             }
         }
