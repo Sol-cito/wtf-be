@@ -1,15 +1,8 @@
 # set properties by PROFILE variable
 source ./properties.sh "${1}"
 
-# import functions
-source ./functions.sh
-
 # check idle profile and port
-IDLE_PROFILE=$(find_idle_service_name "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
-
-IDLE_PORT=$(find_idle_port "${ADDRESS}" "${PORT}" "${BLUE_PORT}" "${GREEN_PORT}")
-
-echo "> idle profile : ${IDLE_PROFILE}"
+echo "> idle service name : ${IDLE_SERVICE_NAME}"
 echo "> idle port : ${IDLE_PORT}"
 
 # check pid and kill process
@@ -56,7 +49,7 @@ echo "> execute ${JAR_NAME}"
 
 echo "> Run java jar in background"
 
-sudo nohup java -jar -Dspring.profiles.active="${IDLE_PROFILE}" "${JAR_NAME}" &
+sudo nohup java -jar -Dspring.profiles.active="${IDLE_SERVICE_NAME}" "${JAR_NAME}" &
 
 echo "> Build success...."
 sleep 10
