@@ -4,12 +4,12 @@ source ./properties.sh "${1}"
 # import functions
 source ./functions.sh
 
-IDLE_PORT=$(find_idle_port $HTTP_TYPE $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
+IDLE_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
 echo "> idle port : ${IDLE_PORT}"
 
 for retry_count in {1..10}
 do
-  response=$(curl -s -k "$HTTP_TYPE"://"$ADDRESS":"$IDLE_PORT"/health)
+  response=$(curl -s -k "http://"$ADDRESS":"$IDLE_PORT"/health)
   up_count=$(echo "$response" | grep 'Hello WTF!' | wc -l)
 
   if [ "$up_count" -ge 1 ]
