@@ -5,7 +5,7 @@ source ./properties.sh "${1}"
 source ./functions.sh
 
 # kill previous process
-PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT)
+PREVIOUS_PORT=$(find_idle_port $ADDRESS $PORT $BLUE_PORT $GREEN_PORT $HTTP_TYPE)
 echo "> Previous port : ${PREVIOUS_PORT}"
 
 PREVIOUS_PID=$(sudo lsof -ti tcp:"${PREVIOUS_PORT}")
