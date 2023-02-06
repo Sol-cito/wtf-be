@@ -25,6 +25,17 @@ pipeline {
             }
         }
 
+        staget('Temp'){
+            steps {
+                echo "temp"
+                script {
+                    source ./initProperties.sh
+                    IDLE_SERVICE_NAME = "${IDLE_SERVICE_NAME}".trim()
+                }
+                echo "temp result : ${IDLE_SERVICE_NAME}"
+            }
+        }
+
         stage('Set global variables') {
             steps {
                 echo "Set global variables by initProperties script"
