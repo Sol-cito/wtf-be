@@ -18,6 +18,6 @@ else
   echo "> kill -15 ${PREVIOUS_PID}"
   sudo kill -9 "${PREVIOUS_PID}"
 fi
-echo "> kill previous process success...."
 
+echo "> kill previous process success...."
 sleep 10
