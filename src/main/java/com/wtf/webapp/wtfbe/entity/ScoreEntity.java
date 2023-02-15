@@ -1,8 +1,10 @@
 package com.wtf.webapp.wtfbe.entity;
 
-import com.wtf.webapp.wtfbe.dto.TeamDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public class ScoreEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne(targetEntity = MatchResultEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "match_result_id")
     private MatchResultEntity matchResultEntity;
 
@@ -24,4 +26,5 @@ public class ScoreEntity extends BaseEntity {
     private PlayerEntity playerEntity;
 
     private String goalType;
+
 }
