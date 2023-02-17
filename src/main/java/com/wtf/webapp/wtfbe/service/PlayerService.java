@@ -7,6 +7,7 @@ import com.wtf.webapp.wtfbe.repository.PlayerRepository;
 import com.wtf.webapp.wtfbe.repository.ScoreRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +22,10 @@ public class PlayerService {
     private final AssistRepository assistRepository;
     private final QueryDSLService queryDSLService;
 
-    public List<PlayerDto> getAllPlayers() {
-        return playerRepository.findAll().stream().map(PlayerEntity::convertToDto).toList();
+    public List<PlayerDto> getAllPlayers(SortRequestDto sortRequestDto) {
+        return playerRepository.findAll(Sort.by(
+                        sortRequestDto.getSortDirection().equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC, sortRequestDto.getColumnName()))
+                .stream().map(PlayerEntity::convertToDto).toList();
     }
 
     public List<PlayerDto> getPlayerByName(String name) {
@@ -97,7 +100,7 @@ public class PlayerService {
         return queryDSLService.getPlayerScoresByMatchResult(playerId, limit);
     }
 
-    public List<PlayerMatchStatDto> getPlayerAssistsByMatchResult(int playerId, int limit){
+    public List<PlayerMatchStatDto> getPlayerAssistsByMatchResult(int playerId, int limit) {
         return queryDSLService.getPlayerAssistsByMatchResult(playerId, limit);
     }
 }

@@ -44,8 +44,8 @@ public class GetController {
     }
 
     @GetMapping(path = "/player")
-    public ResponseEntity<List<PlayerDto>> getAllPlayers() {
-        return new ResponseEntity<>(playerService.getAllPlayers(), OK);
+    public ResponseEntity<List<PlayerDto>> getAllPlayers(@QueryStringArgResolver SortRequestDto sortRequest) {
+        return new ResponseEntity<>(playerService.getAllPlayers(sortRequest), OK);
     }
 
     @GetMapping(path = "/player", params = "id")
