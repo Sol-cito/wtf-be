@@ -44,8 +44,8 @@ public class GetController {
     }
 
     @GetMapping(path = "/player")
-    public ResponseEntity<List<PlayerDto>> getAllPlayers() {
-        return new ResponseEntity<>(playerService.getAllPlayers(), OK);
+    public ResponseEntity<List<PlayerDto>> getAllPlayers(@QueryStringArgResolver SortRequestDto sortRequest) {
+        return new ResponseEntity<>(playerService.getAllPlayers(sortRequest), OK);
     }
 
     @GetMapping(path = "/player", params = "id")
@@ -63,9 +63,21 @@ public class GetController {
         return new ResponseEntity<>(playerService.getPlayerByPosition(position), OK);
     }
 
-    @GetMapping(path = "/player-stat", params = "id")
-    public ResponseEntity<PlayerStatDto> getPlayerStatById(@RequestParam(value = "id") int id) throws Exception {
-        return new ResponseEntity<>(playerService.getPlayerStatById(id), OK);
+    @GetMapping(path = "/player-total-stat", params = "id")
+    public ResponseEntity<PlayerStatDto> getPlayerTotalStatById(@RequestParam(value = "id") int id) throws Exception {
+        return new ResponseEntity<>(playerService.getPlayerTotalStatById(id), OK);
+    }
+
+    @GetMapping(path = "/player-match-score")
+    public ResponseEntity<List<PlayerMatchStatDto>> getPlayerScoresByMatchResult(@RequestParam(value = "playerId") int playerId,
+                                                                                 @RequestParam(value = "limit") int limit) {
+        return new ResponseEntity<>(playerService.getPlayerScoresByMatchResult(playerId, limit), OK);
+    }
+
+    @GetMapping(path = "/player-match-assist")
+    public ResponseEntity<List<PlayerMatchStatDto>> getPlayerAssistsByMatchResult(@RequestParam(value = "playerId") int playerId,
+                                                                                  @RequestParam(value = "limit") int limit) {
+        return new ResponseEntity<>(playerService.getPlayerAssistsByMatchResult(playerId, limit), OK);
     }
 
     @GetMapping(path = "/match")

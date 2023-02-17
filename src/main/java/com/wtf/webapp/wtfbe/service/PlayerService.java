@@ -1,16 +1,13 @@
 package com.wtf.webapp.wtfbe.service;
 
-import com.wtf.webapp.wtfbe.dto.MultipartImageFileDto;
-import com.wtf.webapp.wtfbe.dto.PlayerDto;
-import com.wtf.webapp.wtfbe.dto.PlayerMultipartDto;
-import com.wtf.webapp.wtfbe.dto.PlayerStatDto;
+import com.wtf.webapp.wtfbe.dto.*;
 import com.wtf.webapp.wtfbe.entity.PlayerEntity;
-import com.wtf.webapp.wtfbe.entity.ScoreEntity;
 import com.wtf.webapp.wtfbe.repository.AssistRepository;
 import com.wtf.webapp.wtfbe.repository.PlayerRepository;
 import com.wtf.webapp.wtfbe.repository.ScoreRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +20,12 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
     private final ScoreRepository scoreRepository;
     private final AssistRepository assistRepository;
+    private final QueryDSLService queryDSLService;
 
-    public List<PlayerDto> getAllPlayers() {
-        return playerRepository.findAll().stream().map(PlayerEntity::convertToDto).toList();
+    public List<PlayerDto> getAllPlayers(SortRequestDto sortRequestDto) {
+        return playerRepository.findAll(Sort.by(
+                        sortRequestDto.getSortDirection().equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC, sortRequestDto.getColumnName()))
+                .stream().map(PlayerEntity::convertToDto).toList();
     }
 
     public List<PlayerDto> getPlayerByName(String name) {
@@ -82,7 +82,7 @@ public class PlayerService {
         return playerRepository.save(playerEntity);
     }
 
-    public PlayerStatDto getPlayerStatById(int id) throws EntityNotFoundException {
+    public PlayerStatDto getPlayerTotalStatById(int id) throws EntityNotFoundException {
         PlayerEntity playerEntity = playerRepository.findById(id).orElseThrow(() -> {
             throw new EntityNotFoundException("Player entity not found for getting player stat");
         });
@@ -94,5 +94,13 @@ public class PlayerService {
                 .scores(scores)
                 .assists(assists)
                 .build();
+    }
+
+    public List<PlayerMatchStatDto> getPlayerScoresByMatchResult(int playerId, int limit) {
+        return queryDSLService.getPlayerScoresByMatchResult(playerId, limit);
+    }
+
+    public List<PlayerMatchStatDto> getPlayerAssistsByMatchResult(int playerId, int limit) {
+        return queryDSLService.getPlayerAssistsByMatchResult(playerId, limit);
     }
 }
