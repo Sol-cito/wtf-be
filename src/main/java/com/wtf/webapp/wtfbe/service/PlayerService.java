@@ -37,7 +37,7 @@ public class PlayerService {
     }
 
     public List<PlayerDto> getPlayerByPosition(String position) {
-        return playerRepository.findByPosition(position).stream().map(PlayerEntity::convertToDto).toList();
+        return playerRepository.findByPositionOrderByBackNo(position).stream().map(PlayerEntity::convertToDto).toList();
     }
 
     @Transactional
