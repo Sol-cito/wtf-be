@@ -6,7 +6,6 @@ import com.wtf.webapp.wtfbe.utility.CommonUtility;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.ParseException;
 import java.util.List;
 
 @Builder
@@ -31,6 +30,10 @@ public class TeamMultipartDto {
 
     public boolean isTeamLogoImageNotEmpty() {
         return this.image.size() > 0 && !CommonUtility.isEmpty(this.image.get(0));
+    }
+
+    public boolean isTeamLogoImgDeletedFromUser() {
+        return CommonUtility.isEmpty(this.teamLogoSrc);
     }
 
     public MultipartImageFileDto getTeamLogoMultipartDto() {
