@@ -1,6 +1,7 @@
 package com.wtf.webapp.wtfbe.entity;
 
 import com.wtf.webapp.wtfbe.dto.TeamDto;
+import com.wtf.webapp.wtfbe.dto.TeamMultipartDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,5 +30,10 @@ public class TeamEntity extends BaseEntity {
                 .hometown(this.hometown)
                 .teamLogoSrc(this.teamLogoSrc)
                 .build();
+    }
+
+    public void setAllFieldByTeamMultipartDto(TeamMultipartDto teamMultipartDto) {
+        this.name = teamMultipartDto.getName();
+        this.hometown = teamMultipartDto.getHometown();
     }
 }
