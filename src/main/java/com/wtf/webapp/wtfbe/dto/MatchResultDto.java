@@ -23,18 +23,19 @@ public class MatchResultDto {
     private String shootOutYn;
     private String matchDate;
 
-    public void setScorerAndAssisterDtosByEntities(List<ScoreEntity> scoreEntityList, List<AssistEntity> assistEntityList) {
-        this.scorersAndAssisters = new ScorerAndAssisterDto[scoreEntityList.size()];
-        for (int i = 0; i < scoreEntityList.size(); i++) {
-            PlayerEntity scorerEntity = scoreEntityList.get(i).getPlayerEntity();
-            PlayerEntity assisterEntity = assistEntityList.get(i).getPlayerEntity();
+    public MatchResultDto setScorerAndAssisterDtosByEntities(List<ScoreEntity> scoreEntities, List<AssistEntity> assistEntities) {
+        this.scorersAndAssisters = new ScorerAndAssisterDto[scoreEntities.size()];
+        for (int i = 0; i < scoreEntities.size(); i++) {
+            PlayerEntity scorerEntity = scoreEntities.get(i).getPlayerEntity();
+            PlayerEntity assisterEntity = assistEntities.get(i).getPlayerEntity();
             ScorerAndAssisterDto scorerAndAssisterDto = ScorerAndAssisterDto.builder()
                     .index(i)
-                    .scorerId(scorerEntity == null ? -1 : scorerEntity.getId())
-                    .goalType(scoreEntityList.get(i).getGoalType())
-                    .assisterId(assisterEntity == null ? -1 : assisterEntity.getId())
+                    .scorer(scorerEntity == null ? null : scorerEntity.convertToDto())
+                    .goalType(scoreEntities.get(i).getGoalType())
+                    .assister(assisterEntity == null ? null : assisterEntity.convertToDto())
                     .build();
             this.scorersAndAssisters[i] = scorerAndAssisterDto;
         }
+        return this;
     }
 }

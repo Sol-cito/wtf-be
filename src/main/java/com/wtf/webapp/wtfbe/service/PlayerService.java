@@ -20,7 +20,6 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
     private final ScoreRepository scoreRepository;
     private final AssistRepository assistRepository;
-    private final QueryDSLService queryDSLService;
 
     public List<PlayerDto> getAllPlayers(SortRequestDto sortRequestDto) {
         return playerRepository.findAll(Sort.by(
@@ -94,13 +93,5 @@ public class PlayerService {
                 .scores(scores)
                 .assists(assists)
                 .build();
-    }
-
-    public List<PlayerMatchStatDto> getPlayerScoresByMatchResult(int playerId, int limit) {
-        return queryDSLService.getPlayerScoresByMatchResult(playerId, limit);
-    }
-
-    public List<PlayerMatchStatDto> getPlayerAssistsByMatchResult(int playerId, int limit) {
-        return queryDSLService.getPlayerAssistsByMatchResult(playerId, limit);
     }
 }

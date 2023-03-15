@@ -25,7 +25,6 @@ public class MatchService {
     private final TeamRepository teamRepository;
     private final ScoreRepository scoreRepository;
     private final AssistRepository assistRepository;
-
     private final PlayerRepository playerRepository;
 
     private final String MATCH_ENTITY_NAME = "com.wtf.webapp.wtfbe.entity.MatchResultEntity";
@@ -36,11 +35,18 @@ public class MatchService {
 
         return matchResultEntityResult.stream().map(matchResultEntity -> {
             MatchResultDto matchResultDto = matchResultEntity.convertToDto();
-            List<ScoreEntity> scoreEntityList = scoreRepository.findByMatchResultEntity(matchResultEntity);
-            List<AssistEntity> assistEntityList = assistRepository.findByMatchResultEntity(matchResultEntity);
-            matchResultDto.setScorerAndAssisterDtosByEntities(scoreEntityList, assistEntityList);
+            matchResultDto.setScorerAndAssisterDtosByEntities(matchResultEntity.getScoreEntities()
+                    , matchResultEntity.getAssistEntities());
             return matchResultDto;
         }).collect(Collectors.toList());
+    }
+
+    public MatchResultDto getMatchResultById(int id) throws EntityNotFoundException {
+        MatchResultEntity matchResultEntity = matchResultRepository.findById(id).orElseThrow(() -> {
+            throw new EntityNotFoundException("Corresponding match entity does not exist");
+        });
+        return matchResultEntity.convertToDto()
+                .setScorerAndAssisterDtosByEntities(matchResultEntity.getScoreEntities(), matchResultEntity.getAssistEntities());
     }
 
     public List<MatchTypeDto> getMatchTypes() {
@@ -63,10 +69,10 @@ public class MatchService {
         scoreRepository.deleteAll(scoreRepository.findByMatchResultEntity(matchResultEntity));
 
         Arrays.stream(request.getScorersAndAssisters()).forEach(ele -> {
-            PlayerEntity scorerEntity = playerRepository.findById(ele.getScorerId()).orElse(null);
+            PlayerEntity scorerEntity = playerRepository.findById(ele.getScorer() == null ? -1 : ele.getScorer().getId()).orElse(null);
             ScoreEntity scoreEntity = ScoreEntity.builder().matchResultEntity(matchResultEntity).playerEntity(scorerEntity).goalType(ele.getGoalType()).build();
             scoreRepository.save(scoreEntity);
-            PlayerEntity assisterEntity = playerRepository.findById(ele.getAssisterId()).orElse(null);
+            PlayerEntity assisterEntity = playerRepository.findById(ele.getAssister() == null ? -1 : ele.getAssister().getId()).orElse(null);
             AssistEntity assistEntity = AssistEntity.builder().matchResultEntity(matchResultEntity).scoreEntity(scoreEntity).playerEntity(assisterEntity).build();
             assistRepository.save(assistEntity);
         });

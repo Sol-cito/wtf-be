@@ -27,4 +27,6 @@ public class ScoreEntity extends BaseEntity {
 
     private String goalType;
 
+    @OneToOne(mappedBy = "scoreEntity")
+    private AssistEntity assistEntity;
 }
