@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class ScorerAndAssisterDto {
     private int index;
-    private int scorerId;
+    private PlayerDto scorer;
     private String goalType;
-    private int assisterId;
+    private PlayerDto assister;
 }
