@@ -27,6 +27,8 @@ public class GetController {
     private final BoardMemberService boardMemberService;
     private final ImageService imageService;
 
+    private final QueryDSLService queryDSLService;
+
 
     @GetMapping(path = "/health")
     public ResponseEntity<String> checkHealth() {
@@ -63,27 +65,32 @@ public class GetController {
         return new ResponseEntity<>(playerService.getPlayerByPosition(position), OK);
     }
 
-    @GetMapping(path = "/player-total-stat", params = "id")
-    public ResponseEntity<PlayerStatDto> getPlayerTotalStatById(@RequestParam(value = "id") int id) throws Exception {
+    @GetMapping(path = "/player/total-stat", params = "id")
+    public ResponseEntity<PlayerStatDto> getPlayerTotalStatById(@RequestParam(value = "id") int id) {
         return new ResponseEntity<>(playerService.getPlayerTotalStatById(id), OK);
     }
 
-    @GetMapping(path = "/player-match-score")
+    @GetMapping(path = "/player/match-score")
     public ResponseEntity<List<PlayerMatchStatDto>> getPlayerScoresByMatchResult(@RequestParam(value = "playerId") int playerId,
                                                                                  @RequestParam(value = "limit") int limit) {
-        return new ResponseEntity<>(playerService.getPlayerScoresByMatchResult(playerId, limit), OK);
+        return new ResponseEntity<>(queryDSLService.getPlayerScoresByMatchResult(playerId, limit), OK);
     }
 
-    @GetMapping(path = "/player-match-assist")
+    @GetMapping(path = "/player/match-assist")
     public ResponseEntity<List<PlayerMatchStatDto>> getPlayerAssistsByMatchResult(@RequestParam(value = "playerId") int playerId,
                                                                                   @RequestParam(value = "limit") int limit) {
-        return new ResponseEntity<>(playerService.getPlayerAssistsByMatchResult(playerId, limit), OK);
+        return new ResponseEntity<>(queryDSLService.getPlayerAssistsByMatchResult(playerId, limit), OK);
     }
 
     @GetMapping(path = "/match")
     public ResponseEntity<List<MatchResultDto>> getMatchResult(
             @QueryStringArgResolver MatchResultLookUpRequestDto request) throws ClassNotFoundException {
         return new ResponseEntity<>(matchService.getMatchResult(request), OK);
+    }
+
+    @GetMapping(path = "/match", params = "id")
+    public ResponseEntity<MatchResultDto> getMatchResultById(@RequestParam(value = "id") int id) {
+        return new ResponseEntity<>(matchService.getMatchResultById(id), OK);
     }
 
     @GetMapping(path = "/match-types")

@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -40,6 +40,12 @@ public class MatchResultEntity extends BaseEntity {
     private String shootOutYn;
 
     private String matchDate;
+
+    @OneToMany(mappedBy = "matchResultEntity")
+    private List<ScoreEntity> scoreEntities;
+
+    @OneToMany(mappedBy = "matchResultEntity")
+    private List<AssistEntity> assistEntities;
 
     public MatchResultDto convertToDto() {
         return MatchResultDto.builder()
