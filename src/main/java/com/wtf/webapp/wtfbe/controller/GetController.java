@@ -70,6 +70,18 @@ public class GetController {
         return new ResponseEntity<>(playerService.getPlayerTotalStatById(id), OK);
     }
 
+    @GetMapping(path = "/player/recent-score")
+    public ResponseEntity<List<PlayerRecentStatDto>> getPlayerRecentScore(@RequestParam(value = "playerId") int playerId,
+                                                                          @RequestParam(value = "limit") int limit) {
+        return new ResponseEntity<>(queryDSLService.getPlayerRecentScore(playerId, limit), OK);
+    }
+
+    @GetMapping(path = "/player/recent-assist")
+    public ResponseEntity<List<PlayerRecentStatDto>> getPlayerRecentAssist(@RequestParam(value = "playerId") int playerId,
+                                                                           @RequestParam(value = "limit") int limit) {
+        return new ResponseEntity<>(queryDSLService.getPlayerRecentAssist(playerId, limit), OK);
+    }
+
     @GetMapping(path = "/player/match-score")
     public ResponseEntity<List<PlayerMatchStatDto>> getPlayerScoresByMatchResult(@RequestParam(value = "playerId") int playerId,
                                                                                  @RequestParam(value = "limit") int limit) {
